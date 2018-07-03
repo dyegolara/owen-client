@@ -4,12 +4,12 @@
   "description": "Friend debts tracker",
   "main": "index.html",
   "scripts": {
-    "start": "parcel public/index.html --open",
-    "build": "parcel build public/index.html"
+    "start": "npx parcel public/index.html --open",
+    "build": "npx parcel build public/index.html"
   },
   "dependencies": {
-    "react": "16.4.1",
-    "react-dom": "16.4.1"
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.6.1"
