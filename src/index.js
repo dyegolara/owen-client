@@ -18,11 +18,10 @@ class Router extends React.Component {
     })
   }
   render () {
-    const component = this.state.user ? App : Login
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/' component={component} />
+          <Route path='/'>{this.state.user ? <App /> : <Login />}</Route>
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>

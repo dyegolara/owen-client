@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './App.scss'
+import styles from './App.module.scss'
 import { auth, database } from '../../firebase'
 
 export default class App extends React.Component {

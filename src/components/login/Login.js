@@ -1,7 +1,7 @@
 import React from 'react'
 import { auth, googleAuthProvider } from '../../firebase'
 
-import styles from './Login.scss'
+import styles from './Login.module.scss'
 
 export default class Login extends React.Component {
   signIn = () => {
