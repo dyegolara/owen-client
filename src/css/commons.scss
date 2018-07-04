@@ -1,0 +1,15 @@
+p {
+  &:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+}
+
+:global(.flex-between) {
+  display: flex;
+  justify-content: space-between;
+}
+
+:global(.flex-end) {
+  display: flex;
+  justify-content: flex-end;
+}
