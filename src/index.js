@@ -8,12 +8,10 @@ import Login from './components/login'
 
 class Router extends React.Component {
   state = {
-    user: false
+    user: null
   }
   componentDidMount () {
-    console.log({ auth })
     auth.onAuthStateChanged(user => {
-      console.log({ user })
       this.setState({ user })
     })
   }
