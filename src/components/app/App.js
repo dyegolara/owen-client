@@ -3,6 +3,7 @@ import styles from './App.module.scss'
 import { auth, database } from '../../firebase'
 
 import Menu from 'shared/menu'
+import Button from 'shared/button'
 
 const ROUTES = [
   {
@@ -33,7 +34,7 @@ export default class App extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <button onClick={this.signOut}>Desloguearse</button>
+          <Button onClick={this.signOut}>Desloguearse</Button>
           <div className='columns'>
             <div className='column'>Seleccionar una </div>
           </div>
