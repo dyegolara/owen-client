@@ -4,7 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 
 import './css/index.scss'
 
-import { auth } from './firebase'
+import { auth } from '_firebase'
 import App from './components/app'
 import Login from './components/login'
 

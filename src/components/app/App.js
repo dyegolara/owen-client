@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './App.module.scss'
-import { auth, database } from '../../firebase'
+import { auth, database } from '_firebase'
 
 import Menu from 'shared/menu'
 import Button from 'shared/button'

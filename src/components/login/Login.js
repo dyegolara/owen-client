@@ -1,5 +1,5 @@
 import React from 'react'
-import { auth, googleAuthProvider } from '../../firebase'
+import { auth, googleAuthProvider } from '_firebase'
 
 import styles from './Login.module.scss'
 
