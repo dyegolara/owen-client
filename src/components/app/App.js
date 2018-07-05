@@ -2,6 +2,23 @@ import React from 'react'
 import styles from './App.module.scss'
 import { auth, database } from '../../firebase'
 
+import Menu from 'shared/menu'
+
+const ROUTES = [
+  {
+    id: 'history',
+    label: 'Historial',
+    route: '/history',
+    icon: 'mdi-history'
+  },
+  {
+    id: 'inicio',
+    label: 'Inicio',
+    route: '/',
+    icon: 'mdi-home'
+  }
+]
+
 export default class App extends React.Component {
   state = {
     data: null
@@ -15,18 +32,21 @@ export default class App extends React.Component {
   render () {
     return (
       <div className={styles.wrapper}>
-        <button onClick={this.signOut}>Desloguearse</button>
-        <div className='columns'>
-          <div className='column'>Seleccionar una </div>
+        <div className={styles.content}>
+          <button onClick={this.signOut}>Desloguearse</button>
+          <div className='columns'>
+            <div className='column'>Seleccionar una </div>
+          </div>
+          <div className='columns'>
+            <div className='column'>Total</div>
+          </div>
+          <div className='columns'>
+            <div className='column'>Me deben</div>
+            <div className='column'>Input</div>
+            <div className='column'>Debo</div>
+          </div>
         </div>
-        <div className='columns'>
-          <div className='column'>Total</div>
-        </div>
-        <div className='columns'>
-          <div className='column'>Me deben</div>
-          <div className='column'>Input</div>
-          <div className='column'>Debo</div>
-        </div>
+        <Menu routes={ROUTES} />
       </div>
     )
   }
