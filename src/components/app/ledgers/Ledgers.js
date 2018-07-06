@@ -3,19 +3,31 @@ import { database } from '_firebase'
 import NewLedger from './NewLedger'
 
 export default class Ledgers extends React.Component {
+  state = {
+    dropdownOpen: false,
+    ledgers: []
+  }
   dataRef = database.ref('/ledgers')
   componentDidMount () {
-    this.dataRef.on('value', value => {
-      console.log({ value })
+    this.dataRef.on('value', snapshot => {
+      const dataValue = snapshot.val()
+      const ledgers = Object.keys(dataValue).map(key => dataValue[key])
+      this.setState({ ledgers })
     })
+  }
+  toggleDropdown = () => {
+    this.setState(({ dropdownOpen }) => ({ dropdownOpen: !dropdownOpen }))
   }
   render () {
     const { userId, userName } = this.props
+    const { dropdownOpen, ledgers } = this.state
+    console.log({ ledgers })
     return (
       <div>
-        <div className='dropdown'>
+        <div className={`dropdown ${dropdownOpen ? 'is-active' : ''}`}>
           <div className='dropdown-trigger'>
             <button
+              onClick={this.toggleDropdown}
               className='button'
               aria-haspopup='true'
               aria-controls='dropdown-menu'
@@ -29,20 +41,18 @@ export default class Ledgers extends React.Component {
 
           <div className='dropdown-menu' role='menu'>
             <div className='dropdown-content'>
-              <a href='#' className='dropdown-item'>
-                Dropdown item
-              </a>
-              <a className='dropdown-item'>Other dropdown item</a>
-              <a href='#' className='dropdown-item'>
-                Active dropdown item
-              </a>
-              <a href='#' className='dropdown-item'>
-                Other dropdown item
-              </a>
+              {ledgers.length > 0 &&
+                ledgers.map(ledger => {
+                  const userIds = Object.keys(ledger.users)
+                  const friendId = userIds.find(id => id !== userId)
+                  const friendName = ledger.users[friendId]
+                  return (
+                    <a key={friendId} className='dropdown-item'>
+                      {friendName}
+                    </a>
+                  )
+                })}
               <hr className='dropdown-divider' />
-              <a href='#' className='dropdown-item'>
-                With a divider
-              </a>
             </div>
           </div>
         </div>
