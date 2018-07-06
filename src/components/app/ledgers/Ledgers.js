@@ -13,33 +13,33 @@ export default class Ledgers extends React.Component {
     return (
       <div>
         <div className='dropdown'>
-          <div class='dropdown-trigger'>
+          <div className='dropdown-trigger'>
             <button
-              class='button'
+              className='button'
               aria-haspopup='true'
               aria-controls='dropdown-menu'
             >
               <span>Ledgers</span>
-              <span class='icon is-small'>
-                <i class='mdi mdi-angle-down' aria-hidden='true' />
+              <span className='icon is-small'>
+                <i className='mdi mdi-angle-down' aria-hidden='true' />
               </span>
             </button>
           </div>
 
-          <div class='dropdown-menu' id='dropdown-menu' role='menu'>
-            <div class='dropdown-content'>
-              <a href='#' class='dropdown-item'>
+          <div className='dropdown-menu' role='menu'>
+            <div className='dropdown-content'>
+              <a href='#' className='dropdown-item'>
                 Dropdown item
               </a>
-              <a class='dropdown-item'>Other dropdown item</a>
-              <a href='#' class='dropdown-item is-active'>
+              <a className='dropdown-item'>Other dropdown item</a>
+              <a href='#' className='dropdown-item'>
                 Active dropdown item
               </a>
-              <a href='#' class='dropdown-item'>
+              <a href='#' className='dropdown-item'>
                 Other dropdown item
               </a>
-              <hr class='dropdown-divider' />
-              <a href='#' class='dropdown-item'>
+              <hr className='dropdown-divider' />
+              <a href='#' className='dropdown-item'>
                 With a divider
               </a>
             </div>
