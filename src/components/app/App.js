@@ -9,17 +9,18 @@ export default class App extends React.Component {
     data: null
   }
   componentDidMount () {
-    database.ref().on('value', () => {})
+    database.ref('/').on('value', () => {})
   }
   signOut = () => {
     auth.signOut()
   }
   render () {
+    const { userId, userName } = this.props
     return (
       <div className='container'>
         <div className='flex-between'>
           <div />
-          <Ledgers />
+          <Ledgers userId={userId} userName={userName} />
           <Button
             onClick={this.signOut}
             icon='logout'

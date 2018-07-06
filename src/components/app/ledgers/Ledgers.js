@@ -10,6 +10,7 @@ export default class Ledgers extends React.Component {
     })
   }
   render () {
+    const { userId, userName } = this.props
     return (
       <div>
         <div className='dropdown'>
@@ -45,7 +46,7 @@ export default class Ledgers extends React.Component {
             </div>
           </div>
         </div>
-        <NewLedger />
+        <NewLedger userId={userId} userName={userName} />
       </div>
     )
   }
