@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'uuid'
 import Button from 'shared/button'
 import Modal from 'shared/modal'
 import { database } from '_firebase'
@@ -22,12 +23,11 @@ export default class NewLedger extends React.Component {
       .ref()
       .child('ledgers')
       .push().key
-    console.log(newLedgerKey)
     database.ref('ledgers/' + newLedgerKey).set({
       color: '#5f7eaf',
       users: {
         [userId]: userName,
-        anonymous: friendName
+        [uuid()]: friendName
       },
       modified: 'Date'
     })
