@@ -4,6 +4,7 @@ import { auth, database } from '_firebase'
 
 import Menu from 'shared/menu'
 import Button from 'shared/button'
+import Ledgers from 'components/app/ledgers'
 
 const ROUTES = [
   {
@@ -34,7 +35,15 @@ export default class App extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <Button onClick={this.signOut}>Desloguearse</Button>
+          <div className='flex-between'>
+            <div />
+            <Ledgers />
+            <Button
+              onClick={this.signOut}
+              icon='logout'
+              ariaLabel='Cerrar Sesión'
+            />
+          </div>
           <div className='columns'>
             <div className='column'>Seleccionar una </div>
           </div>
