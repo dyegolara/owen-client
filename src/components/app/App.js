@@ -4,17 +4,6 @@ import { auth, database } from '_firebase'
 import Button from 'shared/button'
 import Ledgers from 'components/app/ledgers'
 
-const createNewUser = userId => {
-  // database.ref('users/' + userId).set({
-  //   color: '#5f7eaf',
-  //   users: {
-  //     [userId]: userName,
-  //     [uuid()]: friendName
-  //   },
-  //   modified: 'Date'
-  // })
-}
-
 export default class App extends React.Component {
   state = {
     data: null
@@ -26,8 +15,14 @@ export default class App extends React.Component {
       .child(userId)
       .on('value', snapshot => {
         const dataValue = snapshot.val()
-        dataValue ? createNewUser(userId) : console.log({ dataValue })
+        dataValue ? console.log({ dataValue }) : this.createNewUser(userId)
       })
+  }
+  createNewUser (userId) {
+    database.ref('users/' + userId).set({
+      name: this.props.userName,
+      email: this.props.email
+    })
   }
   signOut = () => {
     auth.signOut()

@@ -29,7 +29,7 @@ export default class NewLedger extends React.Component {
         [userId]: userName,
         [uuid()]: friendName
       },
-      modified: 'Date'
+      modified: new Date().toISOString()
     })
   }
   renderForm = () => {
