@@ -8,15 +8,16 @@ export default class Ledgers extends React.Component {
   state = {
     ledgers: []
   }
-  dataRef = database.ref('/ledgers')
   componentDidMount () {
-    this.dataRef.on('value', snapshot => {
+    database.ref('ledgers').on('value', snapshot => {
       const dataValue = snapshot.val()
-      const ledgers = Object.keys(dataValue).map(key => ({
-        ...dataValue[key],
-        id: key
-      }))
-      this.setState({ ledgers })
+      if (dataValue) {
+        const ledgers = Object.keys(dataValue).map(key => ({
+          ...dataValue[key],
+          id: key
+        }))
+        this.setState({ ledgers })
+      }
     })
   }
   render () {
