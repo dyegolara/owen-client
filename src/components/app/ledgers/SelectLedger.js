@@ -1,7 +1,9 @@
 import React from 'react'
 import { database } from '_firebase'
+import AppStorage from 'appStorage'
 
 export default class SelectLedger extends React.Component {
+  userId = AppStorage.getUserId()
   state = {
     isActive: false
   }
@@ -9,15 +11,13 @@ export default class SelectLedger extends React.Component {
     this.setState(({ isActive }) => ({ isActive: !isActive }))
   }
   setActiveLedger = ledgerId => {
-    database.ref('users/' + this.props.userId).update({
+    database.ref('users/' + this.userId).update({
       activeLedger: ledgerId
     })
   }
   getFriendName = (ledgers, ledger) => {
     if (ledgers.length === 0 || !ledger) return ''
-    const friendId = Object.keys(ledger.users).find(
-      id => id !== this.props.userId
-    )
+    const friendId = Object.keys(ledger.users).find(id => id !== this.userId)
     return ledger.users[friendId]
   }
   render () {

@@ -3,6 +3,7 @@ import uuid from 'uuid'
 import Button from 'shared/button'
 import Modal from 'shared/modal'
 import { database } from '_firebase'
+import AppStorage from 'appStorage'
 
 export default class NewLedger extends React.Component {
   state = {
@@ -17,7 +18,8 @@ export default class NewLedger extends React.Component {
     this.setState({ [key]: value })
   }
   handleSubmit = () => {
-    const { userId, userName } = this.props
+    const userId = AppStorage.getUserId()
+    const userName = AppStorage.getUserName()
     const { friendName } = this.state
     const userRef = database.ref('users/' + userId)
     const newLedgerId = database

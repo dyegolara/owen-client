@@ -5,36 +5,35 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import './css/index.scss'
 
 import { auth } from '_firebase'
+import AppStorage from 'appStorage'
 import App from './components/app'
 import Login from './components/login'
 
 class Router extends React.Component {
   state = {
-    user: null
+    hasSession: AppStorage.hasSession()
   }
   componentDidMount () {
     auth.onAuthStateChanged(user => {
-      this.setState({ user })
+      user ? this.login(user) : this.logout()
     })
   }
+  login = ({ displayName, email, uid }) => {
+    if (this.state.hasSession) return true
+    AppStorage.setEmail(email)
+    AppStorage.setUserId(uid)
+    AppStorage.setUserName(displayName)
+    this.setState({ hasSession: true })
+  }
+  logout = () => {
+    AppStorage.clearAll()
+    this.setState({ hasSession: false })
+  }
   render () {
-    const { user } = this.state
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/'>
-            {user ? (
-              <App
-                userName={user.displayName}
-                userId={user.uid}
-                avatar={user.photoURL}
-                email={user.email}
-                activeLedger={user.activeLedger}
-              />
-            ) : (
-              <Login />
-            )}
-          </Route>
+          <Route path='/'>{this.state.hasSession ? <App /> : <Login />}</Route>
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>
