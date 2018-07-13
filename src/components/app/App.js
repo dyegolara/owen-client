@@ -38,10 +38,14 @@ export default class App extends React.Component {
       .child(this.userId)
       .on('value', snapshot => {
         const user = snapshot.val()
-        const activeLedger = this.state.ledgers.find(
-          ({ id }) => id === user.activeLedger
-        )
-        user ? this.setState({ activeLedger }) : this.createNewUser(this.userId)
+        if (user) {
+          const activeLedger = this.state.ledgers.find(
+            ({ id }) => id === user.activeLedger
+          )
+          this.setState({ activeLedger })
+        } else {
+          this.createNewUser(this.userId)
+        }
       })
   }
   createNewUser = userId => {
