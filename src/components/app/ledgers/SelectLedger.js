@@ -14,9 +14,6 @@ export default class SelectLedger extends React.Component {
     })
   }
   getFriendName = (ledgers, ledger) => {
-    if (typeof ledger === 'string') {
-      ledger = ledgers.find(({ id }) => id === ledger)
-    }
     if (ledgers.length === 0 || !ledger) return ''
     const friendId = Object.keys(ledger.users).find(
       id => id !== this.props.userId
@@ -25,8 +22,8 @@ export default class SelectLedger extends React.Component {
   }
   render () {
     const { isActive } = this.state
-    const { activeLedgerId, ledgers } = this.props
-    const activeFriendName = this.getFriendName(ledgers, activeLedgerId)
+    const { activeLedger, ledgers } = this.props
+    const activeFriendName = this.getFriendName(ledgers, activeLedger)
     return (
       <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
         <div className='dropdown-trigger'>

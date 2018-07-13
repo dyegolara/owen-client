@@ -6,18 +6,37 @@ import Ledgers from 'components/app/ledgers'
 
 export default class App extends React.Component {
   state = {
-    user: null
+    activeLedger: null,
+    ledgers: []
   }
   componentDidMount () {
+    this.addLedgersSuscription()
+  }
+  addLedgersSuscription () {
+    database.ref('ledgers').on('value', snapshot => {
+      const dataValue = snapshot.val()
+      if (dataValue) {
+        const ledgers = Object.keys(dataValue).map(key => ({
+          ...dataValue[key],
+          id: key
+        }))
+        this.setState({ ledgers }, () => {
+          this.addActiveLedgerSuscription()
+        })
+      }
+    })
+  }
+  addActiveLedgerSuscription = () => {
     const { userId } = this.props
     database
       .ref('users')
       .child(userId)
       .on('value', snapshot => {
         const user = snapshot.val()
-        user
-          ? this.setState({ activeLedger: user.activeLedger })
-          : this.createNewUser(userId)
+        const activeLedger = this.state.ledgers.find(
+          ({ id }) => id === user.activeLedger
+        )
+        user ? this.setState({ activeLedger }) : this.createNewUser(userId)
       })
   }
   createNewUser = userId => {
@@ -34,24 +53,21 @@ export default class App extends React.Component {
   }
   render () {
     const { userId, userName } = this.props
-    const { activeLedger } = this.state
+    const { activeLedger, ledgers } = this.state
     return (
       <div className='container'>
         <div className='flex-between'>
-          <div />
-          <Ledgers
-            activeLedger={activeLedger}
-            userId={userId}
-            userName={userName}
-          />
           <Button
             onClick={this.signOut}
             icon='logout'
             ariaLabel='Cerrar Sesión'
           />
-        </div>
-        <div className='columns'>
-          <div className='column'>Total</div>
+          <Ledgers
+            activeLedger={activeLedger}
+            ledgers={ledgers}
+            userId={userId}
+            userName={userName}
+          />
         </div>
         <div className='columns'>
           <div className='column'>Me deben</div>
