@@ -1,6 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 
 import './css/index.scss'
 
@@ -9,7 +8,7 @@ import AppStorage from 'appStorage'
 import App from './components/app'
 import Login from './components/login'
 
-class Router extends React.Component {
+class Main extends React.Component {
   state = {
     hasSession: AppStorage.hasSession()
   }
@@ -30,15 +29,8 @@ class Router extends React.Component {
     this.setState({ hasSession: false })
   }
   render () {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route path='/'>{this.state.hasSession ? <App /> : <Login />}</Route>
-          <Redirect to='/' />
-        </Switch>
-      </BrowserRouter>
-    )
+    return this.state.hasSession ? <App /> : <Login />
   }
 }
 
-render(<Router />, document.getElementById('app'))
+render(<Main />, document.getElementById('app'))
