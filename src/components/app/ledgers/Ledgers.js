@@ -20,12 +20,15 @@ export default class Ledgers extends React.Component {
     })
   }
   render () {
-    const { userId, userName } = this.props
+    const { activeLedger, userId, userName } = this.props
     const { ledgers } = this.state
-    console.log({ ledgers })
     return (
       <div>
-        <SelectLedger userId={userId} ledgers={ledgers} />
+        <SelectLedger
+          activeLedgerId={activeLedger}
+          ledgers={ledgers}
+          userId={userId}
+        />
         <NewLedger userId={userId} userName={userName} />
       </div>
     )

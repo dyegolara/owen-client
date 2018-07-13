@@ -29,6 +29,7 @@ class Router extends React.Component {
                 userId={user.uid}
                 avatar={user.photoURL}
                 email={user.email}
+                activeLedger={user.activeLedger}
               />
             ) : (
               <Login />

@@ -6,7 +6,7 @@ import Ledgers from 'components/app/ledgers'
 
 export default class App extends React.Component {
   state = {
-    data: null
+    user: null
   }
   componentDidMount () {
     const { userId } = this.props
@@ -14,26 +14,36 @@ export default class App extends React.Component {
       .ref('users')
       .child(userId)
       .on('value', snapshot => {
-        const dataValue = snapshot.val()
-        dataValue ? console.log({ dataValue }) : this.createNewUser(userId)
+        const user = snapshot.val()
+        user
+          ? this.setState({ activeLedger: user.activeLedger })
+          : this.createNewUser(userId)
       })
   }
-  createNewUser (userId) {
+  createNewUser = userId => {
     database.ref('users/' + userId).set({
       name: this.props.userName,
       email: this.props.email
     })
+  }
+  setUset = user => {
+    this.setState({ user })
   }
   signOut = () => {
     auth.signOut()
   }
   render () {
     const { userId, userName } = this.props
+    const { activeLedger } = this.state
     return (
       <div className='container'>
         <div className='flex-between'>
           <div />
-          <Ledgers userId={userId} userName={userName} />
+          <Ledgers
+            activeLedger={activeLedger}
+            userId={userId}
+            userName={userName}
+          />
           <Button
             onClick={this.signOut}
             icon='logout'

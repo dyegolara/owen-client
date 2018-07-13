@@ -13,9 +13,20 @@ export default class SelectLedger extends React.Component {
       activeLedger: ledgerId
     })
   }
+  getFriendName = (ledgers, ledger) => {
+    if (ledgers.length === 0 || !ledger) return ''
+    if (typeof ledger === 'string') {
+      ledger = ledgers.find(({ id }) => id === ledger)
+    }
+    const friendId = Object.keys(ledger.users).find(
+      id => id !== this.props.userId
+    )
+    return ledger.users[friendId]
+  }
   render () {
     const { isActive } = this.state
-    const { ledgers, userId } = this.props
+    const { activeLedgerId, ledgers } = this.props
+    const activeFriendName = this.getFriendName(ledgers, activeLedgerId)
     return (
       <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
         <div className='dropdown-trigger'>
@@ -25,32 +36,26 @@ export default class SelectLedger extends React.Component {
             aria-haspopup='true'
             aria-controls='dropdown-menu'
           >
-            <span>Ledgers</span>
+            <span>{activeFriendName || 'Amigos'}</span>
             <span className='icon is-small'>
               <i className='mdi mdi-angle-down' aria-hidden='true' />
             </span>
           </button>
         </div>
-
         <div className='dropdown-menu' role='menu'>
           <div className='dropdown-content'>
             {ledgers.length > 0 &&
-              ledgers.map(ledger => {
-                const userIds = Object.keys(ledger.users)
-                const friendId = userIds.find(id => id !== userId)
-                const friendName = ledger.users[friendId]
-                return (
-                  <a
-                    key={friendId}
-                    className='dropdown-item'
-                    onClick={() => {
-                      this.setActiveLedger(ledger.id)
-                    }}
-                  >
-                    {friendName}
-                  </a>
-                )
-              })}
+              ledgers.map(ledger => (
+                <a
+                  key={ledger.id}
+                  className='dropdown-item'
+                  onClick={() => {
+                    this.setActiveLedger(ledger.id)
+                  }}
+                >
+                  {this.getFriendName(ledgers, ledger)}
+                </a>
+              ))}
             <hr className='dropdown-divider' />
           </div>
         </div>
