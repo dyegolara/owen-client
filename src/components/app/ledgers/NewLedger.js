@@ -30,7 +30,11 @@ export default class NewLedger extends React.Component {
         [userId]: userName,
         [uuid()]: friendName
       },
-      modified: new Date().toISOString()
+      modified: new Date().toISOString(),
+      total: {
+        amount: 0,
+        to: userId
+      }
     })
     userRef.child('ledgers/' + newLedgerId).set(true)
     userRef.child('activeLedger').set(newLedgerId)
@@ -41,7 +45,7 @@ export default class NewLedger extends React.Component {
       <form>
         <p>Color Picker</p>
         <p>Anonymous ? 'friendName' : 'friendEmail'</p>
-        <p className='field'>
+        <div className='field'>
           <label className='label'>Nombre de tu amigo</label>
           <div className='control has-icons-left'>
             <input
@@ -56,7 +60,7 @@ export default class NewLedger extends React.Component {
               <i className='mdi mdi-account' />
             </span>
           </div>
-        </p>
+        </div>
       </form>
     )
   }
