@@ -3,6 +3,7 @@ import { auth, database } from '_firebase'
 
 import AppStorage from 'appStorage'
 import Button from 'shared/button'
+import Form from 'components/app/form'
 import Ledgers from 'components/app/ledgers'
 import Total from 'components/app/total'
 
@@ -68,11 +69,7 @@ export default class App extends React.Component {
           <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
         </div>
         {activeLedger && <Total total={activeLedger.total} />}
-        <div className='columns'>
-          <div className='column'>Me deben</div>
-          <div className='column'>Input</div>
-          <div className='column'>Debo</div>
-        </div>
+        {activeLedger && <Form />}
       </div>
     )
   }
