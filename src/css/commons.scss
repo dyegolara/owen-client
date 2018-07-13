@@ -4,6 +4,12 @@ p {
   }
 }
 
+:global(.flex-center) {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 :global(.flex-between) {
   display: flex;
   justify-content: space-between;
