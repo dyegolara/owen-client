@@ -19,11 +19,11 @@ export default class NewLedger extends React.Component {
   handleSubmit = () => {
     const { userId, userName } = this.props
     const { friendName } = this.state
-    const newLedgerKey = database
+    const newLedgerId = database
       .ref()
       .child('ledgers')
       .push().key
-    database.ref('ledgers/' + newLedgerKey).set({
+    database.ref('ledgers/' + newLedgerId).set({
       color: '#5f7eaf',
       users: {
         [userId]: userName,
@@ -31,6 +31,10 @@ export default class NewLedger extends React.Component {
       },
       modified: new Date().toISOString()
     })
+    database
+      .ref('users/' + userId)
+      .child('ledgers/' + newLedgerId)
+      .set(true)
   }
   renderForm = () => {
     const { friendName } = this.state
