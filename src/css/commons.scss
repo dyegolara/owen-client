@@ -19,3 +19,8 @@ p {
   display: flex;
   justify-content: flex-end;
 }
+
+:global(.flex-column) {
+  display: flex;
+  flex-direction: column;
+}
