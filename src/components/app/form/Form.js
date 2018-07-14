@@ -21,6 +21,23 @@ const AmountInput = ({ onChange, value, isValid }) => (
   </div>
 )
 
+const DescriptionInput = ({ isOpen, value, onChange, toggleDescription }) => (
+  <div className='flex-center flex-column'>
+    <a onClick={toggleDescription}>
+      <span className='icon'>
+        <i className={`mdi ${isOpen ? 'mdi-close' : 'mdi-plus'}`} />
+      </span>
+      <span>{isOpen ? 'Cancelar' : 'Agregar descripción'}</span>
+    </a>
+    <textarea
+      rows={3}
+      className={`textarea ${isOpen ? '' : 'is-hidden'}`}
+      onChange={onChange}
+      value={value}
+    />
+  </div>
+)
+
 export default class Form extends React.Component {
   state = {
     amount: '',
@@ -44,6 +61,7 @@ export default class Form extends React.Component {
   }
   sendData = () => {
     if (this.validateAmount()) {
+      console.log(this.state)
     }
   }
   render () {
@@ -68,28 +86,14 @@ export default class Form extends React.Component {
             value={amount}
             isValid={isValid}
           />
-          <div className='flex-center flex-column'>
-            <a onClick={this.toggleDescription}>
-              <span className='icon'>
-                <i
-                  className={`mdi ${
-                    isDescriptionOpen ? 'mdi-close' : 'mdi-plus'
-                  }`}
-                />
-              </span>
-              <span>
-                {isDescriptionOpen ? 'Cancelar' : 'Agregar descripción'}
-              </span>
-            </a>
-            <textarea
-              rows={3}
-              className={`textarea ${isDescriptionOpen ? '' : 'is-hidden'}`}
-              onChange={e => {
-                this.handleInputChange('description', e.currentTarget.value)
-              }}
-              value={description}
-            />
-          </div>
+          <DescriptionInput
+            isOpen={isDescriptionOpen}
+            onChange={e => {
+              this.handleInputChange('description', e.currentTarget.value)
+            }}
+            value={description}
+            toggleDescription={this.toggleDescription}
+          />
         </div>
         <div className='column is-2'>
           <Button className='is-danger is-large is-fullwidth'>
