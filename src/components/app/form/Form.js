@@ -74,7 +74,7 @@ export default class Form extends React.Component {
             onClick={this.sendData}
           >
             <span className='icon is-large'>
-              <i className='mdi mdi-import' />
+              <i className='mdi mdi-36px mdi-import' />
             </span>
           </Button>
         </div>
@@ -98,7 +98,7 @@ export default class Form extends React.Component {
         <div className='column is-2'>
           <Button className='is-danger is-large is-fullwidth'>
             <span className='icon is-large'>
-              <i className='mdi mdi-export' />
+              <i className='mdi mdi-36px mdi-export' />
             </span>
           </Button>
         </div>
