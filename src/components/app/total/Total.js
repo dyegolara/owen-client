@@ -8,14 +8,12 @@ const getTotalLabel = total => {
 }
 
 const Total = ({ total }) => (
-  <div className='flex-center'>
-    <div className='box'>
-      <div className='level'>
-        <div className='level-item has-text-centered'>
-          <div>
-            <p className='heading'>{getTotalLabel(total)}</p>
-            <p className='title'>$ {total.amount}</p>
-          </div>
+  <div className='section flex-center'>
+    <div className='level'>
+      <div className='level-item has-text-centered'>
+        <div>
+          <p className='heading'>{getTotalLabel(total)}</p>
+          <p className='title is-1'>$ {total.amount}</p>
         </div>
       </div>
     </div>

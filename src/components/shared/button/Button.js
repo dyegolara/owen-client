@@ -19,6 +19,6 @@ export default ({
         <i className={`mdi mdi-${icon}`} />
       </span>
     )}
-    {children}
+    {children && <span>{children}</span>}
   </button>
 )

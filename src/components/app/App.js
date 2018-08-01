@@ -63,7 +63,7 @@ export default class App extends React.Component {
   render () {
     const { activeLedger, ledgers } = this.state
     return (
-      <div className='container'>
+      <div className='container' style={{ padding: '1rem' }}>
         <div className='flex-between'>
           <Button
             onClick={this.signOut}

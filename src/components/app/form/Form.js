@@ -10,6 +10,7 @@ const AmountInput = ({ onChange, value, isValid }) => (
         onChange={onChange}
         value={value}
         placeholder='0'
+        //  style={{textAlign: 'right'}}
       />
       <span className='icon is-left'>
         <i className='mdi mdi-currency-usd' />
