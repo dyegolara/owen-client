@@ -11,6 +11,7 @@ export default class SelectLedger extends React.Component {
     this.setState(({ isActive }) => ({ isActive: !isActive }))
   }
   setActiveLedger = ledgerId => {
+    this.toggleDropdown()
     database.ref('users/' + this.userId).update({
       activeLedger: ledgerId
     })

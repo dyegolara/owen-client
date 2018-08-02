@@ -23,19 +23,28 @@ const AmountInput = ({ onChange, value, isValid }) => (
 )
 
 const DescriptionInput = ({ isOpen, value, onChange, toggleDescription }) => (
-  <div className='flex-center flex-column'>
-    <a onClick={toggleDescription}>
-      <span className='icon'>
-        <i className={`mdi ${isOpen ? 'mdi-close' : 'mdi-plus'}`} />
-      </span>
-      <span>{isOpen ? 'Cancelar' : 'Agregar descripción'}</span>
-    </a>
-    <textarea
-      rows={3}
-      className={`textarea ${isOpen ? '' : 'is-hidden'}`}
-      onChange={onChange}
-      value={value}
-    />
+  <div className='field'>
+    <div className={`control has-text-centered `}>
+      <a
+        onClick={toggleDescription}
+        className={isOpen ? 'has-text-danger' : ''}
+      >
+        <span className='icon'>
+          <i className={`mdi ${isOpen ? 'mdi-close' : 'mdi-plus'}`} />
+        </span>
+        <span>{isOpen ? 'Cancelar' : 'Agregar descripción'}</span>
+      </a>
+    </div>
+    <div className='control'>
+      <textarea
+        rows={3}
+        className={`textarea ${isOpen ? '' : 'is-hidden'}`}
+        onChange={onChange}
+        value={value}
+        style={{ marginTop: '0.5rem' }}
+        placeholder='Descripción'
+      />
+    </div>
   </div>
 )
 
@@ -60,9 +69,10 @@ export default class Form extends React.Component {
     this.setState({ isValid })
     return isValid
   }
-  sendData = () => {
+  sendData = type => {
+    const { amount } = this.state
     if (this.validateAmount()) {
-      console.log(this.state)
+      console.log({ type, amount })
     }
   }
   render () {
@@ -72,7 +82,9 @@ export default class Form extends React.Component {
         <div className='column is-2 is-offset-2'>
           <Button
             className='is-success is-large is-fullwidth'
-            onClick={this.sendData}
+            onClick={() => {
+              this.sendData('deben')
+            }}
           >
             <span className='icon is-large'>
               <i className='mdi mdi-36px mdi-import' />
@@ -97,7 +109,12 @@ export default class Form extends React.Component {
           />
         </div>
         <div className='column is-2'>
-          <Button className='is-danger is-large is-fullwidth'>
+          <Button
+            className='is-danger is-large is-fullwidth'
+            onClick={() => {
+              this.sendData('debo')
+            }}
+          >
             <span className='icon is-large'>
               <i className='mdi mdi-36px mdi-export' />
             </span>
