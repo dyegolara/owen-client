@@ -73,7 +73,7 @@ export default class App extends React.Component {
           <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
         </div>
         {activeLedger && <Total total={activeLedger.total} />}
-        {activeLedger && <Form />}
+        {activeLedger && <Form activeLedger={activeLedger} />}
       </div>
     )
   }
