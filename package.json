@@ -1,6 +1,6 @@
 {
   "name": "owen-client",
-  "licence": "MIT",
+  "license": "MIT",
   "version": "1.0.0",
   "description": "Friend debts tracker",
   "standard": {
