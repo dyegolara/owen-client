@@ -18,7 +18,7 @@ export default class App extends React.Component {
   componentDidMount () {
     this.addLedgersSuscription()
   }
-  addLedgersSuscription () {
+  addLedgersSuscription = () => {
     database.ref('ledgers').on('value', snapshot => {
       const dataValue = snapshot.val()
       if (dataValue) {
@@ -26,20 +26,19 @@ export default class App extends React.Component {
           ...dataValue[key],
           id: key
         }))
-        this.setState({ ledgers }, () => {
-          this.addActiveLedgerSuscription()
-        })
+        this.setState({ ledgers }, this.addActiveLedgerSuscription)
       }
     })
   }
   addActiveLedgerSuscription = () => {
+    const { ledgers } = this.state
     database
       .ref('users')
       .child(this.userId)
       .on('value', snapshot => {
         const user = snapshot.val()
         if (user) {
-          const activeLedger = this.state.ledgers.find(
+          const activeLedger = ledgers.find(
             ({ id }) => id === user.activeLedger
           )
           this.setState({ activeLedger })
@@ -53,9 +52,6 @@ export default class App extends React.Component {
       name: this.userName,
       email: this.email
     })
-  }
-  setUset = user => {
-    this.setState({ user })
   }
   signOut = () => {
     auth.signOut()
