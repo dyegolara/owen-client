@@ -1,8 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { database } from '_firebase'
-import AppStorage from 'appStorage'
 
-export default class SelectLedger extends React.Component {
+import AppStorage from 'appStorage'
+import LedgerShape from 'shared/propTypes/ledger'
+
+export default class SelectLedger extends React.PureComponent {
+  static propTypes = {
+    activeLedger: LedgerShape,
+    ledgers: PropTypes.arrayOf(LedgerShape).isRequired
+  }
+  static defaultProps = {
+    activeLedger: null
+  }
   userId = AppStorage.getUserId()
   state = {
     isActive: false
