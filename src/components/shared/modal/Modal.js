@@ -19,7 +19,13 @@ const Modal = ({
   )
   const footer = !noFooter ? (
     <footer className='modal-card-foot'>
-      <button className={'button is-success'} onClick={onSubmit}>
+      <button
+        className={'button is-success'}
+        onClick={() => {
+          onSubmit()
+          toggleModal()
+        }}
+      >
         {primaryButton}
       </button>
       <button
