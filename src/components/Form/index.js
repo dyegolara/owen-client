@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { database } from '_firebase';
 
 import AppStorage from 'appStorage';
-import AmountInput from 'components/app/form/AmountInput';
-import DescriptionInput from 'components/app/form/DescriptionInput';
+import AmountInput from 'components/Form/AmountInput';
+import DescriptionInput from 'components/Form/DescriptionInput';
 import Button from 'shared/button';
 
 export default class Form extends React.Component {

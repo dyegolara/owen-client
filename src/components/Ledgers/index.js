@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import NewLedger from 'components/app/ledgers/NewLedger';
-import SelectLedger from 'components/app/ledgers/SelectLedger';
+import NewLedger from 'components/Ledgers/NewLedger';
+import SelectLedger from 'components/Ledgers/SelectLedger';
 
 const Ledgers = ({ activeLedger, ledgers }) => (
   <>

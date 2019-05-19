@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { database } from '_firebase';
 
-import Form from 'components/app/form';
-import Ledgers from 'components/app/ledgers';
-import Total from 'components/app/total';
-import SignOut from 'components/app/signOut';
+import Form from 'components/Form';
+import Ledgers from 'components/Ledgers';
+import Total from 'components/Total';
+import SignOut from 'components/SignOut';
 import useAuth from 'hooks/useAuth';
 
 const Owen = () => {
