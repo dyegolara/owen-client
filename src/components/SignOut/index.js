@@ -1,6 +1,6 @@
 import React from 'react';
 import { auth } from '_firebase';
-import Button from 'shared/button';
+import Button from 'components/Button';
 
 const SignOut = () => (
   <Button

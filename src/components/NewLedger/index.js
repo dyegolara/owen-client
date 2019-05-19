@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import uuid from 'uuid';
 import { database } from '_firebase';
 
-import Button from 'shared/button';
-import Modal from 'shared/modal';
+import Button from 'components/Button';
+import Modal from 'components/Modal';
 import useAuth from 'hooks/useAuth';
 
 const NewLedger = () => {

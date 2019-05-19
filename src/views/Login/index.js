@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { auth, googleAuthProvider } from '_firebase';
 
-import Button from 'shared/button';
+import Button from 'components/Button';
 import styles from './styles.module.scss';
 
 const Login = () => {

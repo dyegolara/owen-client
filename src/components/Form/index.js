@@ -3,7 +3,7 @@ import { database } from '_firebase';
 
 import AmountInput from 'components/Form/AmountInput';
 import DescriptionInput from 'components/Form/DescriptionInput';
-import Button from 'shared/button';
+import Button from 'components/Button';
 import useAuth from 'hooks/useAuth';
 import LedgerShape from 'components/Ledgers/propTypes';
 
