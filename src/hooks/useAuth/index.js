@@ -1,26 +1,28 @@
 import { useState, useEffect } from 'react';
+import store from 'store';
 import { auth } from '_firebase';
 
-const useAuth = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const [isLoggedIn, setIsLoggedId] = useState(false);
+const ID_KEY = 'userId';
+const EMAIL_KEY = 'email';
+const USER_NAME_KEY = 'userName';
+const IS_LOGGED_IN = 'isLoggedIn';
 
-  const addUserInfo = (newItem) => {
-    setUserInfo(current => ({
-      ...current,
-      ...newItem,
-    }));
-  };
+const useAuth = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!store.get(IS_LOGGED_IN));
 
   const login = ({ displayName, email, uid }) => {
     if (isLoggedIn) return;
-    addUserInfo({ email });
-    addUserInfo({ userId: uid });
-    addUserInfo({ userName: displayName });
-    setIsLoggedId(true);
+    store.set(ID_KEY, uid);
+    store.set(EMAIL_KEY, email);
+    store.set(USER_NAME_KEY, displayName);
+    store.set(IS_LOGGED_IN, true);
+    setIsLoggedIn(true);
   };
 
-  const logout = () => setIsLoggedId(false);
+  const logout = () => {
+    store.set(IS_LOGGED_IN, false);
+    setIsLoggedIn(false);
+  };
 
   useEffect(() => {
     auth.onAuthStateChanged(user => (
@@ -28,7 +30,11 @@ const useAuth = () => {
     ));
   });
 
-  const getUserInfo = () => ({ ...userInfo });
+  const getUserInfo = () => ({
+    [ID_KEY]: store.get(ID_KEY),
+    [EMAIL_KEY]: store.get(EMAIL_KEY),
+    [USER_NAME_KEY]: store.get(USER_NAME_KEY),
+  });
 
   return {
     isLoggedIn,
