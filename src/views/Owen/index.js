@@ -11,9 +11,10 @@ const Owen = () => {
   const [activeLedger, setActiveLedger] = useState(null);
   const [ledgers, setLedgers] = useState([]);
   const { getUserInfo } = useAuth();
-  const { userId, userName, email } = getUserInfo();
+  const { userId } = getUserInfo();
 
   const createNewUser = () => {
+    const { userName, email } = getUserInfo();
     database.ref(`users/${userId}`).set({
       name: userName,
       email,

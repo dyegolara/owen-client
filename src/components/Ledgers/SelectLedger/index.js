@@ -28,6 +28,7 @@ const SelectLedger = ({ activeLedger, ledgers }) => {
   };
 
   const activeFriendName = getFriendName(ledgers, activeLedger);
+
   return (
     <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
       <div className='dropdown-trigger'>

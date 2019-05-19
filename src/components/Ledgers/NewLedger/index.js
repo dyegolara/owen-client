@@ -1,28 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import uuid from 'uuid';
+import { database } from '_firebase';
+
 import Button from 'shared/button';
 import Modal from 'shared/modal';
-import { database } from '_firebase';
-import AppStorage from 'appStorage';
+import useAuth from 'hooks/useAuth';
 
-export default class NewLedger extends React.Component {
-  state = {
-    friendName: '',
-    modalOpen: false,
-  }
+const NewLedger = () => {
+  const [friendName, setFriendName] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const { getUserInfo } = useAuth();
 
-  toggleModal = () => {
-    this.setState(({ modalOpen }) => ({ modalOpen: !modalOpen }));
-  }
+  const toggleModal = () => {
+    setModalOpen(current => !current);
+  };
 
-  handleChange = (value, key) => {
-    this.setState({ [key]: value });
-  }
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setFriendName(value);
+  };
 
-  handleSubmit = () => {
-    const userId = AppStorage.getUserId();
-    const userName = AppStorage.getUserName();
-    const { friendName } = this.state;
+  const handleSubmit = () => {
+    const { userId, userName } = getUserInfo();
     const userRef = database.ref(`users/${userId}`);
     const newLedgerId = database
       .ref()
@@ -42,51 +41,41 @@ export default class NewLedger extends React.Component {
     });
     userRef.child(`ledgers/${newLedgerId}`).set(true);
     userRef.child('activeLedger').set(newLedgerId);
-  }
+  };
 
-  renderForm = () => {
-    const { friendName } = this.state;
-    return (
-      <form>
-        <p>Color Picker</p>
-        <p>Anonymous ? friendName : friendEmail</p>
-        <div className='field'>
-          <label className='label' htmlFor='newLedger'>
-            <span>Nombre de tu amigo</span>
-            <div className='control has-icons-left'>
-              <input
-                id='newLedger'
-                type='text'
-                className='input'
-                value={friendName}
-                onChange={(e) => {
-                  this.handleChange(e.currentTarget.value, 'friendName');
-                }}
-              />
-              <span className='icon is-small is-left'>
-                <i className='mdi mdi-account' />
-              </span>
-            </div>
-          </label>
-        </div>
-      </form>
-    );
-  }
+  return (
+    <>
+      <Button icon='plus' onClick={toggleModal} />
+      <Modal
+        title='Agregar Ledger'
+        isActive={modalOpen}
+        toggleModal={toggleModal}
+        onSubmit={handleSubmit}
+      >
+        <form>
+          <p>Color Picker</p>
+          <p>Anonymous ? friendName : friendEmail</p>
+          <div className='field'>
+            <label className='label' htmlFor='newLedger'>
+              <span>Nombre de tu amigo</span>
+              <div className='control has-icons-left'>
+                <input
+                  id='newLedger'
+                  type='text'
+                  className='input'
+                  value={friendName}
+                  onChange={handleInputChange}
+                />
+                <span className='icon is-small is-left'>
+                  <i className='mdi mdi-account' />
+                </span>
+              </div>
+            </label>
+          </div>
+        </form>
+      </Modal>
+    </>
+  );
+};
 
-  render() {
-    const { modalOpen } = this.state;
-    return (
-      <React.Fragment>
-        <Button icon='plus' onClick={this.toggleModal} />
-        <Modal
-          title='Agregar Ledger'
-          isActive={modalOpen}
-          toggleModal={this.toggleModal}
-          onSubmit={this.handleSubmit}
-        >
-          {this.renderForm()}
-        </Modal>
-      </React.Fragment>
-    );
-  }
-}
+export default NewLedger;
