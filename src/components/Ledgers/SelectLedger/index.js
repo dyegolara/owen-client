@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { database } from '_firebase';
 
 import AppStorage from 'appStorage';
-import LedgerShape from 'shared/propTypes/ledger';
+import LedgerShape from 'components/Ledgers/propTypes';
 
 export default class SelectLedger extends React.PureComponent {
   static propTypes = {

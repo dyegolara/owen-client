@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import NewLedger from 'components/Ledgers/NewLedger';
 import SelectLedger from 'components/Ledgers/SelectLedger';
+import LedgerShape from 'components/Ledgers/propTypes';
 
 const Ledgers = ({ activeLedger, ledgers }) => (
   <>
@@ -12,12 +13,8 @@ const Ledgers = ({ activeLedger, ledgers }) => (
 );
 
 Ledgers.propTypes = {
-  activeLedger: PropTypes.string,
-  ledgers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    total: PropTypes.string,
-    users: PropTypes.array,
-  })),
+  activeLedger: LedgerShape,
+  ledgers: PropTypes.arrayOf(LedgerShape),
 };
 
 Ledgers.defaultProps = {
