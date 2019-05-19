@@ -46,6 +46,7 @@ export default class SelectLedger extends React.PureComponent {
       <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
         <div className='dropdown-trigger'>
           <button
+            type='button'
             onClick={this.toggleDropdown}
             className='button'
             aria-haspopup='true'
@@ -61,7 +62,8 @@ export default class SelectLedger extends React.PureComponent {
           <div className='dropdown-content'>
             {ledgers.length > 0
               && ledgers.map(ledger => (
-                <a
+                <button
+                  type='button'
                   key={ledger.id}
                   className='dropdown-item'
                   onClick={() => {
@@ -69,7 +71,7 @@ export default class SelectLedger extends React.PureComponent {
                   }}
                 >
                   {this.getFriendName(ledgers, ledger)}
-                </a>
+                </button>
               ))}
             <hr className='dropdown-divider' />
           </div>

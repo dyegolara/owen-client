@@ -7,7 +7,6 @@ import AppStorage from 'appStorage';
 
 export default class NewLedger extends React.Component {
   state = {
-    friendEmail: '',
     friendName: '',
     modalOpen: false,
   }
@@ -50,34 +49,38 @@ export default class NewLedger extends React.Component {
     return (
       <form>
         <p>Color Picker</p>
-        <p>Anonymous ? 'friendName' : 'friendEmail'</p>
+        <p>Anonymous ? friendName : friendEmail</p>
         <div className='field'>
-          <label className='label'>Nombre de tu amigo</label>
-          <div className='control has-icons-left'>
-            <input
-              type='text'
-              className='input'
-              value={friendName}
-              onChange={(e) => {
-                this.handleChange(e.currentTarget.value, 'friendName');
-              }}
-            />
-            <span className='icon is-small is-left'>
-              <i className='mdi mdi-account' />
-            </span>
-          </div>
+          <label className='label' htmlFor='newLedger'>
+            <span>Nombre de tu amigo</span>
+            <div className='control has-icons-left'>
+              <input
+                id='newLedger'
+                type='text'
+                className='input'
+                value={friendName}
+                onChange={(e) => {
+                  this.handleChange(e.currentTarget.value, 'friendName');
+                }}
+              />
+              <span className='icon is-small is-left'>
+                <i className='mdi mdi-account' />
+              </span>
+            </div>
+          </label>
         </div>
       </form>
     );
   }
 
   render() {
+    const { modalOpen } = this.state;
     return (
       <React.Fragment>
         <Button icon='plus' onClick={this.toggleModal} />
         <Modal
           title='Agregar Ledger'
-          isActive={this.state.modalOpen}
+          isActive={modalOpen}
           toggleModal={this.toggleModal}
           onSubmit={this.handleSubmit}
         >
