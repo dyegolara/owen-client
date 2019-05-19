@@ -1,6 +1,8 @@
-@import './minireset';
-@import './commons';
+import { createGlobalStyle } from 'styled-components';
+import 'styles/minireset.css';
+import 'styles/commons.css';
 
+const GlobalStyle = createGlobalStyle`
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +20,7 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
-:global(#app) {
+#app {
   position: relative;
   display: block;
   width: 100%;
@@ -28,3 +30,6 @@ html {
   margin: 0;
   padding: 0;
 }
+`;
+
+export default GlobalStyle;

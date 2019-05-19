@@ -1,26 +1,24 @@
-p {
-  &:not(:last-child) {
-    margin-bottom: 0.5rem;
-  }
+p:not(:last-child) {
+  margin-bottom: 0.5rem;
 }
 
-:global(.flex-center) {
+.flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-:global(.flex-between) {
+.flex-between {
   display: flex;
   justify-content: space-between;
 }
 
-:global(.flex-end) {
+.flex-end {
   display: flex;
   justify-content: flex-end;
 }
 
-:global(.flex-column) {
+.flex-column {
   display: flex;
   flex-direction: column;
 }

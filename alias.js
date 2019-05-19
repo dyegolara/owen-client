@@ -7,6 +7,7 @@ module.exports = {
   components: path.resolve(__dirname, 'src/components/'),
   _firebase: path.resolve(__dirname, 'src/firebase.js'),
   shared: path.resolve(__dirname, 'src/components/shared/'),
+  styles: path.resolve(__dirname, 'src/styles/'),
   utils: path.resolve(__dirname, 'src/utils/'),
   views: path.resolve(__dirname, 'src/views/'),
 };

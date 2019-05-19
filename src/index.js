@@ -5,12 +5,17 @@ import Owen from 'views/Owen';
 import Login from 'views/Login';
 import useAuth from 'hooks/useAuth';
 
-import './css/index.scss';
+import GlobalStyle from 'styles';
 
 const App = () => {
   const { isLoggedIn } = useAuth();
 
-  return isLoggedIn ? <Owen /> : <Login />;
+  return (
+    <>
+      <GlobalStyle />
+      {isLoggedIn ? <Owen /> : <Login />}
+    </>
+  );
 };
 
 render(<App />, document.getElementById('app'));
