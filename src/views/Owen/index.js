@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { database } from '_firebase';
 
+import Container from 'components/Container';
 import Form from 'components/Form';
 import Topbar from 'components/Topbar';
 import Total from 'components/Total';
@@ -55,7 +56,7 @@ const Owen = () => {
   useEffect(addActiveLedgerSuscription, [ledgers, userId]);
 
   return (
-    <div className='container' style={{ padding: '1rem' }}>
+    <Container style={{ padding: '1rem' }}>
       <Topbar activeLedger={activeLedger} ledgers={ledgers} />
       {activeLedger && (
         <>
@@ -63,7 +64,7 @@ const Owen = () => {
           <Form activeLedger={activeLedger} />
         </>
       )}
-    </div>
+    </Container>
   );
 };
 
