@@ -56,7 +56,7 @@ const Owen = () => {
   useEffect(addActiveLedgerSuscription, [ledgers, userId]);
 
   return (
-    <Container style={{ padding: '1rem' }}>
+    <Container>
       <Topbar activeLedger={activeLedger} ledgers={ledgers} />
       {activeLedger && (
         <>

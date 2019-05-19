@@ -80,7 +80,7 @@ const Form = ({ activeLedger }) => {
   useEffect(getFriendId, [activeLedger.id]);
 
   return (
-    <div className='columns'>
+    <div className='columns' style={{ padding: '1rem' }}>
       <div className='column is-2 is-offset-2'>
         <Button
           className='is-success is-large is-fullwidth'
@@ -107,9 +107,7 @@ const Form = ({ activeLedger }) => {
       <div className='column is-2'>
         <Button
           className='is-danger is-large is-fullwidth'
-          onClick={() => {
-            createDebt(getFriendId());
-          }}
+          onClick={() => createDebt(friendId)}
         >
           <span className='icon is-large'>
             <i className='mdi mdi-36px mdi-export' />
