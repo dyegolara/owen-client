@@ -6,6 +6,7 @@ const Button = ({
   icon,
   className,
   ariaLabel,
+  children,
   ...props
 }) => (
   <button
@@ -19,6 +20,7 @@ const Button = ({
         <i className={`mdi mdi-${icon}`} />
       </span>
     )}
+    {children && <span>{children}</span>}
   </button>
 );
 
@@ -27,6 +29,7 @@ Button.propTypes = {
   icon: PropTypes.string,
   className: PropTypes.string,
   ariaLabel: PropTypes.string,
+  children: PropTypes.node,
 };
 
 Button.defaultProps = {
@@ -34,6 +37,7 @@ Button.defaultProps = {
   icon: '',
   className: '',
   ariaLabel: '',
+  children: null,
 };
 
 export default Button;
