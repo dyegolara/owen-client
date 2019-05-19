@@ -1,11 +1,11 @@
 import React from 'react'
-import { auth, database } from '_firebase'
+import { database } from '_firebase'
 
 import AppStorage from 'appStorage'
-import Button from 'shared/button'
 import Form from 'components/app/form'
 import Ledgers from 'components/app/ledgers'
 import Total from 'components/app/total'
+import SignOut from 'components/app/signOut'
 
 export default class App extends React.Component {
   userId = AppStorage.getUserId()
@@ -53,19 +53,12 @@ export default class App extends React.Component {
       email: this.email
     })
   }
-  signOut = () => {
-    auth.signOut()
-  }
   render () {
     const { activeLedger, ledgers } = this.state
     return (
       <div className='container' style={{ padding: '1rem' }}>
         <div className='flex-between'>
-          <Button
-            onClick={this.signOut}
-            icon='logout'
-            ariaLabel='Cerrar Sesión'
-          />
+          <SignOut />
           <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
         </div>
         {activeLedger && <Total total={activeLedger.total} />}
