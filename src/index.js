@@ -8,9 +8,9 @@ import useAuth from 'hooks/useAuth';
 import './css/index.scss';
 
 const App = () => {
-  const { hasSession } = useAuth();
+  const { isLoggedIn } = useAuth();
 
-  return hasSession ? <Owen /> : <Login />;
+  return isLoggedIn ? <Owen /> : <Login />;
 };
 
 render(<App />, document.getElementById('app'));
