@@ -1,22 +1,24 @@
-import React from 'react'
-import { auth, googleAuthProvider } from '_firebase'
+import React from 'react';
+import { auth, googleAuthProvider } from '_firebase';
 
-import styles from './Login.module.scss'
+import Button from 'shared/button';
+import styles from './Login.module.scss';
 
-import Button from 'shared/button'
 
 export default class Login extends React.Component {
   state = {
-    isLoading: false
+    isLoading: false,
   }
+
   signIn = () => {
     this.setState({ isLoading: true }, () => {
       auth.signInWithRedirect(googleAuthProvider).finally(() => {
-        this.setState({ isLoading: false })
-      })
-    })
+        this.setState({ isLoading: false });
+      });
+    });
   }
-  render () {
+
+  render() {
     return (
       <div className={`hero is-fullheight is-bold is-link ${styles.login}`}>
         <Button
@@ -27,6 +29,6 @@ export default class Login extends React.Component {
           Iniciar sesión
         </Button>
       </div>
-    )
+    );
   }
 }

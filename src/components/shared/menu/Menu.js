@@ -1,10 +1,10 @@
 // Librerías
-import React from 'react'
-import { withRouter } from 'react-router-dom'
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 // Componentes
-import MenuItem from './MenuItem'
+import MenuItem from './MenuItem';
 // Estilos
-import styles from './Menu.module.scss'
+import styles from './Menu.module.scss';
 
 export default withRouter(({ location, routes }) => (
   <div className={styles.wrapper}>
@@ -12,4 +12,4 @@ export default withRouter(({ location, routes }) => (
       <MenuItem {...item} key={item.label} location={location} />
     ))}
   </div>
-))
+));

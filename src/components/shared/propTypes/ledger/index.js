@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const LedgerShape = PropTypes.shape({
   color: PropTypes.string.isRequired,
@@ -6,9 +6,9 @@ const LedgerShape = PropTypes.shape({
   modified: PropTypes.string.isRequired,
   total: PropTypes.shape({
     amount: PropTypes.number.isRequired,
-    to: PropTypes.string.isRequired
+    to: PropTypes.string.isRequired,
   }).isRequired,
-  users: PropTypes.objectOf(PropTypes.string).isRequired
-})
+  users: PropTypes.objectOf(PropTypes.string).isRequired,
+});
 
-export default LedgerShape
+export default LedgerShape;

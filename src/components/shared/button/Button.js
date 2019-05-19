@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 // Para el MVP usaremos Bulma, después lo quitamos por estilos propios
 export default ({
@@ -7,7 +7,7 @@ export default ({
   onClick,
   icon,
   className = '',
-  ariaLabel = ''
+  ariaLabel = '',
 }) => (
   <button
     className={`button ${className} ${type ? `is-${type}` : ''}`}
@@ -21,4 +21,4 @@ export default ({
     )}
     {children && <span>{children}</span>}
   </button>
-)
+);

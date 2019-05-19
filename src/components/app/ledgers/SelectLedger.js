@@ -1,40 +1,47 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { database } from '_firebase'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { database } from '_firebase';
 
-import AppStorage from 'appStorage'
-import LedgerShape from 'shared/propTypes/ledger'
+import AppStorage from 'appStorage';
+import LedgerShape from 'shared/propTypes/ledger';
 
 export default class SelectLedger extends React.PureComponent {
   static propTypes = {
     activeLedger: LedgerShape,
-    ledgers: PropTypes.arrayOf(LedgerShape).isRequired
+    ledgers: PropTypes.arrayOf(LedgerShape).isRequired,
   }
+
   static defaultProps = {
-    activeLedger: null
+    activeLedger: null,
   }
+
   userId = AppStorage.getUserId()
+
   state = {
-    isActive: false
+    isActive: false,
   }
+
   toggleDropdown = () => {
-    this.setState(({ isActive }) => ({ isActive: !isActive }))
+    this.setState(({ isActive }) => ({ isActive: !isActive }));
   }
-  setActiveLedger = ledgerId => {
-    this.toggleDropdown()
-    database.ref('users/' + this.userId).update({
-      activeLedger: ledgerId
-    })
+
+  setActiveLedger = (ledgerId) => {
+    this.toggleDropdown();
+    database.ref(`users/${this.userId}`).update({
+      activeLedger: ledgerId,
+    });
   }
+
   getFriendName = (ledgers, ledger) => {
-    if (ledgers.length === 0 || !ledger) return ''
-    const friendId = Object.keys(ledger.users).find(id => id !== this.userId)
-    return ledger.users[friendId]
+    if (ledgers.length === 0 || !ledger) return '';
+    const friendId = Object.keys(ledger.users).find(id => id !== this.userId);
+    return ledger.users[friendId];
   }
-  render () {
-    const { isActive } = this.state
-    const { activeLedger, ledgers } = this.props
-    const activeFriendName = this.getFriendName(ledgers, activeLedger)
+
+  render() {
+    const { isActive } = this.state;
+    const { activeLedger, ledgers } = this.props;
+    const activeFriendName = this.getFriendName(ledgers, activeLedger);
     return (
       <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
         <div className='dropdown-trigger'>
@@ -52,13 +59,13 @@ export default class SelectLedger extends React.PureComponent {
         </div>
         <div className='dropdown-menu' role='menu'>
           <div className='dropdown-content'>
-            {ledgers.length > 0 &&
-              ledgers.map(ledger => (
+            {ledgers.length > 0
+              && ledgers.map(ledger => (
                 <a
                   key={ledger.id}
                   className='dropdown-item'
                   onClick={() => {
-                    this.setActiveLedger(ledger.id)
+                    this.setActiveLedger(ledger.id);
                   }}
                 >
                   {this.getFriendName(ledgers, ledger)}
@@ -68,6 +75,6 @@ export default class SelectLedger extends React.PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

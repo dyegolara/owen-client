@@ -1,2 +1,3 @@
-import AppStorage from './AppStorage'
-export default AppStorage
+import AppStorage from './AppStorage';
+
+export default AppStorage;

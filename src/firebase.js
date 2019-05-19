@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/database'
-import 'firebase/auth'
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
 
 // Initialize Firebase
 const config = {
@@ -9,12 +9,12 @@ const config = {
   databaseURL: 'https://owen-client.firebaseio.com',
   projectId: 'owen-client',
   storageBucket: 'owen-client.appspot.com',
-  messagingSenderId: '620408412764'
-}
-firebase.initializeApp(config)
+  messagingSenderId: '620408412764',
+};
+firebase.initializeApp(config);
 
-export const database = firebase.database()
-export const auth = firebase.auth()
-export const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+export const database = firebase.database();
+export const auth = firebase.auth();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export default firebase
+export default firebase;

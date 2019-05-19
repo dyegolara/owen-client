@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Modal = ({
   isActive,
@@ -9,21 +9,21 @@ const Modal = ({
   primaryButton,
   secondaryButton,
   children,
-  requestInProgress
+  requestInProgress,
 }) => {
   const header = (
     <header className='modal-card-head'>
       <p className='modal-card-title'>{title}</p>
       <button className='delete' aria-label='close' onClick={toggleModal} />
     </header>
-  )
+  );
   const footer = !noFooter ? (
     <footer className='modal-card-foot'>
       <button
-        className={'button is-success'}
+        className='button is-success'
         onClick={() => {
-          onSubmit()
-          toggleModal()
+          onSubmit();
+          toggleModal();
         }}
       >
         {primaryButton}
@@ -36,7 +36,7 @@ const Modal = ({
         {secondaryButton}
       </button>
     </footer>
-  ) : null
+  ) : null;
   return (
     <div className={`modal ${isActive ? 'is-active' : ''}`}>
       <div className='modal-background' onClick={toggleModal} />
@@ -46,10 +46,10 @@ const Modal = ({
         {footer}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;
 
 Modal.defaultProps = {
   isActive: false,
@@ -60,5 +60,5 @@ Modal.defaultProps = {
   primaryIcon: 'check',
   secondaryButton: 'Cancelar',
   secondaryIcon: 'cancel',
-  requestInProgress: false
-}
+  requestInProgress: false,
+};
