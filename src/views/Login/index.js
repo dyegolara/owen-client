@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { auth, googleAuthProvider } from '_firebase';
 
 import Button from 'shared/button';
-import styles from './Login.module.scss';
-
+import styles from './styles.module.scss';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
