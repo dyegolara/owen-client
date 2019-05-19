@@ -1,51 +1,63 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import { database } from '_firebase';
 
-import AppStorage from 'appStorage';
 import AmountInput from 'components/Form/AmountInput';
 import DescriptionInput from 'components/Form/DescriptionInput';
 import Button from 'shared/button';
+import useAuth from 'hooks/useAuth';
+import LedgerShape from 'components/Ledgers/propTypes';
 
-export default class Form extends React.Component {
-  userId = AppStorage.getUserId()
+const Form = ({ activeLedger }) => {
+  const { getUserInfo } = useAuth();
+  const { userId } = getUserInfo();
+  const [amount, setAmount] = useState('');
+  const [description, setDescription] = useState('');
+  const [friendId, setFriendId] = useState('');
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
-  state = {
-    amount: '',
-    description: '',
-    isDescriptionOpen: false,
-    isValid: true,
-  }
+  const getFriendId = () => {
+    const { users } = activeLedger;
+    const newFriendId = Object.keys(users).find(id => id !== userId);
+    setFriendId(newFriendId);
+  };
 
-  getFriendId = () => {
-    const { activeLedger: { users } } = this.props;
-    Object.keys(users).find(id => id !== this.userId);
-  }
+  const getOtherUserId = _userId => (_userId === userId ? friendId : userId);
 
-  getOtherUserId = userId => (userId === this.userId ? this.getFriendId() : this.userId)
+  const handleAmountChange = (e) => {
+    const { value } = e.target;
+    setAmount(value);
+  };
 
-  handleInputChange = (key, value) => {
-    this.setState({ [key]: value });
-  }
+  const handleDescriptionChange = (e) => {
+    const { value } = e.target;
+    setAmount(value);
+  };
 
-  toggleDescription = () => {
-    this.setState(({ isDescriptionOpen }) => ({
-      description: '',
-      isDescriptionOpen: !isDescriptionOpen,
-    }));
-  }
+  const toggleDescription = () => {
+    setDescription('');
+    setIsDescriptionOpen(current => !current);
+  };
 
-  validateAmount = () => {
-    const { amount } = this.state;
-    const isValid = +amount >= 1;
-    this.setState({ isValid });
-    return isValid;
-  }
+  const validateAmount = () => {
+    setIsValid(+amount >= 1);
+  };
 
-  createDebt = (to) => {
-    const { amount, description } = this.state;
-    const { activeLedger } = this.props;
-    if (!this.validateAmount()) return;
+  const updateTotal = (newDebt) => {
+    const { id, total } = activeLedger;
+    const newAmount = total.to === newDebt.to
+      ? +total.amount + newDebt.amount
+      : +total.amount - newDebt.amount;
+    const to = amount < 0 ? getOtherUserId(total.to) : total.to;
+    const newTotal = {
+      amount: Math.abs(newAmount),
+      to,
+    };
+    database.ref(`ledgers/${id}/total`).set(newTotal);
+  };
+
+  const createDebt = (to) => {
+    if (!isValid) return;
     const newDebtId = database
       .ref()
       .child('ledgers')
@@ -61,78 +73,55 @@ export default class Form extends React.Component {
     };
 
     database.ref(`ledgers/${activeLedger.id}/debts/${newDebtId}`).set(newDebt);
-    this.updateTotal(newDebt);
-  }
+    updateTotal(newDebt);
+  };
 
-  updateTotal = (newDebt) => {
-    const { activeLedger: { id, total } } = this.props;
-    const amount = total.to === newDebt.to
-      ? +total.amount + newDebt.amount
-      : +total.amount - newDebt.amount;
-    const to = amount < 0 ? this.getOtherUserId(total.to) : total.to;
-    const newTotal = {
-      amount: Math.abs(amount),
-      to,
-    };
-    database.ref(`ledgers/${id}/total`).set(newTotal);
-  }
+  useEffect(validateAmount, [amount]);
+  useEffect(getFriendId, [activeLedger.id]);
 
-  render() {
-    const {
-      amount, description, isDescriptionOpen, isValid,
-    } = this.state;
-    return (
-      <div className='columns'>
-        <div className='column is-2 is-offset-2'>
-          <Button
-            className='is-success is-large is-fullwidth'
-            onClick={() => {
-              this.createDebt(this.userId);
-            }}
-          >
-            <span className='icon is-large'>
-              <i className='mdi mdi-36px mdi-import' />
-            </span>
-          </Button>
-        </div>
-        <div className='column is-4 flex-column'>
-          <AmountInput
-            onChange={(e) => {
-              this.handleInputChange('amount', e.currentTarget.value);
-            }}
-            value={amount}
-            isValid={isValid}
-          />
-          <DescriptionInput
-            isOpen={isDescriptionOpen}
-            onChange={(e) => {
-              this.handleInputChange('description', e.currentTarget.value);
-            }}
-            value={description}
-            toggleDescription={this.toggleDescription}
-          />
-        </div>
-        <div className='column is-2'>
-          <Button
-            className='is-danger is-large is-fullwidth'
-            onClick={() => {
-              this.createDebt(this.getFriendId());
-            }}
-          >
-            <span className='icon is-large'>
-              <i className='mdi mdi-36px mdi-export' />
-            </span>
-          </Button>
-        </div>
+  return (
+    <div className='columns'>
+      <div className='column is-2 is-offset-2'>
+        <Button
+          className='is-success is-large is-fullwidth'
+          onClick={() => createDebt(userId)}
+        >
+          <span className='icon is-large'>
+            <i className='mdi mdi-36px mdi-import' />
+          </span>
+        </Button>
       </div>
-    );
-  }
-}
+      <div className='column is-4 flex-column'>
+        <AmountInput
+          onChange={handleAmountChange}
+          value={amount}
+          isValid={isValid}
+        />
+        <DescriptionInput
+          isOpen={isDescriptionOpen}
+          onChange={handleDescriptionChange}
+          value={description}
+          toggleDescription={toggleDescription}
+        />
+      </div>
+      <div className='column is-2'>
+        <Button
+          className='is-danger is-large is-fullwidth'
+          onClick={() => {
+            createDebt(getFriendId());
+          }}
+        >
+          <span className='icon is-large'>
+            <i className='mdi mdi-36px mdi-export' />
+          </span>
+        </Button>
+      </div>
+    </div>
+  );
+};
 
 Form.propTypes = {
-  activeLedger: PropTypes.shape({
-    id: PropTypes.string,
-    total: PropTypes.string,
-    users: PropTypes.array,
-  }).isRequired,
+  activeLedger: LedgerShape.isRequired,
 };
+
+export default Form;
