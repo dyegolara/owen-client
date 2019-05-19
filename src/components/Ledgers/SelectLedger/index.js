@@ -27,7 +27,7 @@ const SelectLedger = ({ activeLedger, ledgers }) => {
     return ledger.users[friendId];
   };
 
-  const activeFriendName = getFriendName(ledgers, activeLedger);
+  const activeFriendName = getFriendName(activeLedger);
 
   return (
     <div className={`dropdown ${isActive ? 'is-active' : ''}`}>

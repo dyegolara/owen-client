@@ -52,7 +52,7 @@ const Owen = () => {
       });
   };
 
-  useEffect(addLedgersSuscription);
+  useEffect(addLedgersSuscription, []);
   useEffect(addActiveLedgerSuscription, [ledgers, userId]);
 
   return (
