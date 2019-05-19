@@ -3,13 +3,21 @@ import PropTypes from 'prop-types';
 
 import useAuth from 'hooks/useAuth';
 
-const Total = ({ total }) => {
+const YOU_OWE_THEM = 'Debes';
+const THEY_OWE_YOU = 'Te deben';
+
+const formatCurrency = amount => new Intl.NumberFormat('es-MX', {
+  style: 'currency',
+  currency: 'MXN',
+}).format(amount);
+
+const Total = ({ total: { amount, to } }) => {
   const { getUserInfo } = useAuth();
 
   const getTotalLabel = () => {
     const { userId } = getUserInfo();
-    if (total.amount === 0) return 'Debes';
-    return total.to === userId ? 'Te deben' : 'Debes';
+    if (amount === 0) return YOU_OWE_THEM;
+    return to === userId ? YOU_OWE_THEM : THEY_OWE_YOU;
   };
 
   return (
@@ -19,7 +27,7 @@ const Total = ({ total }) => {
           <div>
             <p className='heading'>{getTotalLabel()}</p>
             <p className='title is-1'>
-              {`$${total.amount}`}
+              {formatCurrency(amount)}
             </p>
           </div>
         </div>

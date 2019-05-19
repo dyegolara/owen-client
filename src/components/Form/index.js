@@ -22,7 +22,7 @@ const Form = ({ activeLedger }) => {
     setFriendId(newFriendId);
   };
 
-  const getOtherUserId = _userId => (_userId === userId ? friendId : userId);
+  const getOtherUserId = id => (id === userId ? friendId : userId);
 
   const handleAmountChange = (e) => {
     const { value } = e.target;
@@ -44,16 +44,17 @@ const Form = ({ activeLedger }) => {
   };
 
   const updateTotal = (newDebt) => {
-    const { id, total } = activeLedger;
-    const newAmount = total.to === newDebt.to
-      ? +total.amount + newDebt.amount
-      : +total.amount - newDebt.amount;
-    const to = amount < 0 ? getOtherUserId(total.to) : total.to;
+    const { id: activeLedgerId, total: { amount: currentDebt, to: currentOwner } } = activeLedger;
+
+    const newAmount = currentOwner === newDebt.to // If the owner is the same,
+      ? +currentDebt + newDebt.amount // add the amount to the debt
+      : +currentDebt - newDebt.amount; // else, pay the amount to the debt
+
     const newTotal = {
       amount: Math.abs(newAmount),
-      to,
+      to: newAmount < 0 ? getOtherUserId(currentOwner) : currentOwner,
     };
-    database.ref(`ledgers/${id}/total`).set(newTotal);
+    database.ref(`ledgers/${activeLedgerId}/total`).set(newTotal);
   };
 
   const createDebt = (to) => {
@@ -74,6 +75,7 @@ const Form = ({ activeLedger }) => {
 
     database.ref(`ledgers/${activeLedger.id}/debts/${newDebtId}`).set(newDebt);
     updateTotal(newDebt);
+    setAmount('');
   };
 
   useEffect(validateAmount, [amount]);
