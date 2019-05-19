@@ -1,25 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { database } from '_firebase';
 
-import NewLedger from 'components/Ledgers/NewLedger';
-import SelectLedger from 'components/Ledgers/SelectLedger';
 import LedgerShape from 'components/Ledgers/propTypes';
+import useAuth from 'hooks/useAuth';
 
-const Ledgers = ({ activeLedger, ledgers }) => (
-  <>
-    <SelectLedger activeLedger={activeLedger} ledgers={ledgers} />
-    <NewLedger />
-  </>
-);
+const SelectLedger = ({ activeLedger, ledgers }) => {
+  const [isActive, setIsActive] = useState(false);
+  const { getUserInfo } = useAuth();
+  const { userId } = getUserInfo();
 
-Ledgers.propTypes = {
+  const toggleDropdown = () => {
+    setIsActive(current => !current);
+  };
+
+  const setActiveLedger = (ledgerId) => {
+    toggleDropdown();
+    database.ref(`users/${userId}`).update({
+      activeLedger: ledgerId,
+    });
+  };
+
+  const getFriendName = (ledger) => {
+    if (ledgers.length === 0 || !ledger) return '';
+    const friendId = Object.keys(ledger.users).find(id => id !== userId);
+    return ledger.users[friendId];
+  };
+
+  const activeFriendName = getFriendName(activeLedger);
+
+  return (
+    <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
+      <div className='dropdown-trigger'>
+        <button
+          type='button'
+          onClick={toggleDropdown}
+          className='button'
+          aria-haspopup='true'
+          aria-controls='dropdown-menu'
+        >
+          <span>{activeFriendName || 'Amigos'}</span>
+          <span className='icon is-small'>
+            <i className='mdi mdi-angle-down' aria-hidden='true' />
+          </span>
+        </button>
+      </div>
+      <div className='dropdown-menu' role='menu'>
+        <div className='dropdown-content'>
+          {ledgers.length > 0
+              && ledgers.map(ledger => (
+                <button
+                  type='button'
+                  key={ledger.id}
+                  className='dropdown-item'
+                  onClick={() => setActiveLedger(ledger.id)}
+                >
+                  {getFriendName(ledger)}
+                </button>
+              ))}
+          <hr className='dropdown-divider' />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+SelectLedger.propTypes = {
   activeLedger: LedgerShape,
-  ledgers: PropTypes.arrayOf(LedgerShape),
+  ledgers: PropTypes.arrayOf(LedgerShape).isRequired,
 };
 
-Ledgers.defaultProps = {
+SelectLedger.defaultProps = {
   activeLedger: null,
-  ledgers: [],
 };
 
-export default Ledgers;
+export default SelectLedger;

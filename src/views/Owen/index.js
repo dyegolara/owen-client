@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { database } from '_firebase';
 
 import Form from 'components/Form';
-import Ledgers from 'components/Ledgers';
+import Topbar from 'components/Topbar';
 import Total from 'components/Total';
-import SignOut from 'components/SignOut';
 import useAuth from 'hooks/useAuth';
 
 const Owen = () => {
@@ -57,10 +56,7 @@ const Owen = () => {
 
   return (
     <div className='container' style={{ padding: '1rem' }}>
-      <div className='flex-between'>
-        <SignOut />
-        <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
-      </div>
+      <Topbar activeLedger={activeLedger} ledgers={ledgers} />
       {activeLedger && (
         <>
           <Total total={activeLedger.total} />
