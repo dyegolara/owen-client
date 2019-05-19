@@ -15,8 +15,8 @@ const useAuth = () => {
   const login = ({ displayName, email, uid }) => {
     if (isLoggedIn) return;
     addUserInfo({ email });
-    addUserInfo({ id: uid });
-    addUserInfo({ name: displayName });
+    addUserInfo({ userId: uid });
+    addUserInfo({ userName: displayName });
     setIsLoggedId(true);
   };
 

@@ -1,77 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { database } from '_firebase';
 
-import AppStorage from 'appStorage';
 import Form from 'components/app/form';
 import Ledgers from 'components/app/ledgers';
 import Total from 'components/app/total';
 import SignOut from 'components/app/signOut';
+import useAuth from 'hooks/useAuth';
 
-export default class App extends React.Component {
-  userId = AppStorage.getUserId()
+const Owen = () => {
+  const [activeLedger, setActiveLedger] = useState(null);
+  const [ledgers, setLedgers] = useState([]);
+  const { getUserInfo } = useAuth();
+  const { userId, userName, email } = getUserInfo();
 
-  userName = AppStorage.getUserName()
+  const createNewUser = () => {
+    database.ref(`users/${userId}`).set({
+      name: userName,
+      email,
+    });
+  };
 
-  email = AppStorage.getEmail()
-
-  state = {
-    activeLedger: null,
-    ledgers: [],
-  }
-
-  componentDidMount() {
-    this.addLedgersSuscription();
-  }
-
-  addLedgersSuscription = () => {
+  const addLedgersSuscription = () => {
     database.ref('ledgers').on('value', (snapshot) => {
       const dataValue = snapshot.val();
       if (dataValue) {
-        const ledgers = Object.keys(dataValue).map(key => ({
+        const newLedgers = Object.keys(dataValue).map(key => ({
           ...dataValue[key],
           id: key,
         }));
-        this.setState({ ledgers }, this.addActiveLedgerSuscription);
+        setLedgers(newLedgers);
       }
     });
-  }
+  };
 
-  addActiveLedgerSuscription = () => {
-    const { ledgers } = this.state;
+  const addActiveLedgerSuscription = () => {
     database
       .ref('users')
-      .child(this.userId)
+      .child(userId)
       .on('value', (snapshot) => {
         const user = snapshot.val();
         if (user) {
-          const activeLedger = ledgers.find(
+          const newActiveLedger = ledgers.find(
             ({ id }) => id === user.activeLedger,
           );
-          this.setState({ activeLedger });
+          setActiveLedger(newActiveLedger);
         } else {
-          this.createNewUser(this.userId);
+          createNewUser(userId);
         }
       });
-  }
+  };
 
-  createNewUser = (userId) => {
-    database.ref(`users/${userId}`).set({
-      name: this.userName,
-      email: this.email,
-    });
-  }
+  useEffect(addLedgersSuscription);
+  useEffect(addActiveLedgerSuscription, [ledgers]);
 
-  render() {
-    const { activeLedger, ledgers } = this.state;
-    return (
-      <div className='container' style={{ padding: '1rem' }}>
-        <div className='flex-between'>
-          <SignOut />
-          <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
-        </div>
-        {activeLedger && <Total total={activeLedger.total} />}
-        {activeLedger && <Form activeLedger={activeLedger} />}
+  return (
+    <div className='container' style={{ padding: '1rem' }}>
+      <div className='flex-between'>
+        <SignOut />
+        <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
       </div>
-    );
-  }
-}
+      {activeLedger && <Total total={activeLedger.total} />}
+      {activeLedger && <Form activeLedger={activeLedger} />}
+    </div>
+  );
+};
+
+export default Owen;
