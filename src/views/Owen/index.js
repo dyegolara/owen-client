@@ -34,6 +34,7 @@ const Owen = () => {
   };
 
   const addActiveLedgerSuscription = () => {
+    if (!userId) return;
     database
       .ref('users')
       .child(userId)
@@ -51,7 +52,7 @@ const Owen = () => {
   };
 
   useEffect(addLedgersSuscription);
-  useEffect(addActiveLedgerSuscription, [ledgers]);
+  useEffect(addActiveLedgerSuscription, [ledgers, userId]);
 
   return (
     <div className='container' style={{ padding: '1rem' }}>

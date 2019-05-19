@@ -1,82 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { database } from '_firebase';
 
-import AppStorage from 'appStorage';
 import LedgerShape from 'components/Ledgers/propTypes';
+import useAuth from 'hooks/useAuth';
 
-export default class SelectLedger extends React.PureComponent {
-  static propTypes = {
-    activeLedger: LedgerShape,
-    ledgers: PropTypes.arrayOf(LedgerShape).isRequired,
-  }
+const SelectLedger = ({ activeLedger, ledgers }) => {
+  const [isActive, setIsActive] = useState(false);
+  const { getUserInfo } = useAuth();
+  const { userId } = getUserInfo();
 
-  static defaultProps = {
-    activeLedger: null,
-  }
+  const toggleDropdown = () => {
+    setIsActive(current => !current);
+  };
 
-  userId = AppStorage.getUserId()
-
-  state = {
-    isActive: false,
-  }
-
-  toggleDropdown = () => {
-    this.setState(({ isActive }) => ({ isActive: !isActive }));
-  }
-
-  setActiveLedger = (ledgerId) => {
-    this.toggleDropdown();
-    database.ref(`users/${this.userId}`).update({
+  const setActiveLedger = (ledgerId) => {
+    toggleDropdown();
+    database.ref(`users/${userId}`).update({
       activeLedger: ledgerId,
     });
-  }
+  };
 
-  getFriendName = (ledgers, ledger) => {
+  const getFriendName = (ledger) => {
     if (ledgers.length === 0 || !ledger) return '';
-    const friendId = Object.keys(ledger.users).find(id => id !== this.userId);
+    const friendId = Object.keys(ledger.users).find(id => id !== userId);
     return ledger.users[friendId];
-  }
+  };
 
-  render() {
-    const { isActive } = this.state;
-    const { activeLedger, ledgers } = this.props;
-    const activeFriendName = this.getFriendName(ledgers, activeLedger);
-    return (
-      <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
-        <div className='dropdown-trigger'>
-          <button
-            type='button'
-            onClick={this.toggleDropdown}
-            className='button'
-            aria-haspopup='true'
-            aria-controls='dropdown-menu'
-          >
-            <span>{activeFriendName || 'Amigos'}</span>
-            <span className='icon is-small'>
-              <i className='mdi mdi-angle-down' aria-hidden='true' />
-            </span>
-          </button>
-        </div>
-        <div className='dropdown-menu' role='menu'>
-          <div className='dropdown-content'>
-            {ledgers.length > 0
+  const activeFriendName = getFriendName(ledgers, activeLedger);
+  return (
+    <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
+      <div className='dropdown-trigger'>
+        <button
+          type='button'
+          onClick={toggleDropdown}
+          className='button'
+          aria-haspopup='true'
+          aria-controls='dropdown-menu'
+        >
+          <span>{activeFriendName || 'Amigos'}</span>
+          <span className='icon is-small'>
+            <i className='mdi mdi-angle-down' aria-hidden='true' />
+          </span>
+        </button>
+      </div>
+      <div className='dropdown-menu' role='menu'>
+        <div className='dropdown-content'>
+          {ledgers.length > 0
               && ledgers.map(ledger => (
                 <button
                   type='button'
                   key={ledger.id}
                   className='dropdown-item'
-                  onClick={() => {
-                    this.setActiveLedger(ledger.id);
-                  }}
+                  onClick={() => setActiveLedger(ledger.id)}
                 >
-                  {this.getFriendName(ledgers, ledger)}
+                  {getFriendName(ledger)}
                 </button>
               ))}
-            <hr className='dropdown-divider' />
-          </div>
+          <hr className='dropdown-divider' />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+SelectLedger.propTypes = {
+  activeLedger: LedgerShape,
+  ledgers: PropTypes.arrayOf(LedgerShape).isRequired,
+};
+
+SelectLedger.defaultProps = {
+  activeLedger: null,
+};
+
+export default SelectLedger;
