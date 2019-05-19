@@ -35,7 +35,7 @@ const Owen = () => {
   };
 
   const addActiveLedgerSuscription = () => {
-    if (!userId) return;
+    if (!userId || ledgers.length === 0) return;
     database
       .ref('users')
       .child(userId)
@@ -61,8 +61,12 @@ const Owen = () => {
         <SignOut />
         <Ledgers activeLedger={activeLedger} ledgers={ledgers} />
       </div>
-      {activeLedger && <Total total={activeLedger.total} />}
-      {activeLedger && <Form activeLedger={activeLedger} />}
+      {activeLedger && (
+        <>
+          <Total total={activeLedger.total} />
+          <Form activeLedger={activeLedger} />
+        </>
+      )}
     </div>
   );
 };
