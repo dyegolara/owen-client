@@ -60,7 +60,8 @@ export const ActiveLedgerWrapper = ({ children }) => {
       .map(([key, value]) => ({
         id: key,
         ...value,
-      }));
+      }))
+      .sort((a, b) => new Date(b.created) - new Date(a.created));
     setDebts(debtsList);
   };
 

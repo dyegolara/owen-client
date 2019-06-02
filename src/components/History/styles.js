@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-const StyledHistory = styled.div`
+const HistoryWrapper = styled.div`
   padding: 0 1rem;
-  margin-top: 10rem;
+  margin-top: 6rem;
+  margin-bottom: 1rem;
 `;
 
-export default StyledHistory;
+export default HistoryWrapper;
