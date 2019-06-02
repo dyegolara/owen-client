@@ -1,29 +1,22 @@
-import React, { useState } from 'react';
-import { auth, googleAuthProvider } from '_firebase';
+import React from 'react';
 
 import Button from 'components/Button';
-import styles from './styles.module.scss';
+import LoginWrapper from 'views/Login/styles';
+import useAuth from 'hooks/useAuth';
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const signIn = () => {
-    setIsLoading(true);
-
-    auth.signInWithRedirect(googleAuthProvider)
-      .finally(() => setIsLoading(false));
-  };
+  const { sessionStatus, login, LOADING } = useAuth();
 
   return (
-    <div className={`hero is-fullheight is-bold is-link ${styles.login}`}>
+    <LoginWrapper className='hero is-fullheight is-bold is-link'>
       <Button
-        className={`is-medium ${isLoading ? 'is-loading' : ''}`}
-        onClick={signIn}
+        className={`is-medium ${sessionStatus === LOADING ? 'is-loading' : ''}`}
+        onClick={login}
         icon='google'
       >
           Iniciar sesión
       </Button>
-    </div>
+    </LoginWrapper>
   );
 };
 

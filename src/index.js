@@ -9,12 +9,12 @@ import useAuth from 'hooks/useAuth';
 import GlobalStyle from 'styles';
 
 const App = () => {
-  const { isLoggedIn } = useAuth();
+  const { sessionStatus, ACTIVE } = useAuth();
 
   return (
     <>
       <GlobalStyle />
-      {isLoggedIn ? <Owen /> : <Login />}
+      {sessionStatus === ACTIVE ? <Owen /> : <Login />}
     </>
   );
 };

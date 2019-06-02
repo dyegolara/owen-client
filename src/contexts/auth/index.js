@@ -1,37 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import store from 'store';
-import { auth } from '_firebase';
+import { auth, googleAuthProvider } from '_firebase';
 
 const ID_KEY = 'userId';
 const EMAIL_KEY = 'email';
 const USER_NAME_KEY = 'userName';
-const IS_LOGGED_IN = 'isLoggedIn';
+const SESSION_STATUS = 'sessionStatus';
+
+export const ACTIVE = 'active';
+export const LOADING = 'loading';
+export const INACTIVE = 'inactive';
 
 const AuthContext = React.createContext({});
 
 export const AuthContextWrapper = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!store.get(IS_LOGGED_IN));
+  const [sessionStatus, setSessionStatus] = useState(store.get(SESSION_STATUS));
 
-  const login = ({ displayName, email, uid }) => {
-    if (isLoggedIn) return;
+  const setUserInfo = ({ displayName, email, uid }) => {
+    if (sessionStatus === ACTIVE) return;
     store.set(ID_KEY, uid);
     store.set(EMAIL_KEY, email);
     store.set(USER_NAME_KEY, displayName);
-    store.set(IS_LOGGED_IN, true);
-    setIsLoggedIn(true);
+    store.set(SESSION_STATUS, ACTIVE);
+    setSessionStatus(ACTIVE);
+  };
+
+  const login = () => {
+    store.set(SESSION_STATUS, LOADING);
+    setSessionStatus(LOADING);
+    auth.signInWithRedirect(googleAuthProvider);
   };
 
   const logout = () => {
-    store.set(IS_LOGGED_IN, false);
-    setIsLoggedIn(false);
+    store.set(SESSION_STATUS, INACTIVE);
+    setSessionStatus(INACTIVE);
   };
 
   useEffect(() => {
     auth.onAuthStateChanged(user => (
-      user ? login(user) : logout()
+      user ? setUserInfo(user) : logout()
     ));
-  });
+  }, []);
 
   const getUserInfo = () => ({
     [ID_KEY]: store.get(ID_KEY),
@@ -41,8 +51,12 @@ export const AuthContextWrapper = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      isLoggedIn,
+      login,
+      sessionStatus,
       getUserInfo,
+      ACTIVE,
+      LOADING,
+      INACTIVE,
     }}
     >
       {children}
