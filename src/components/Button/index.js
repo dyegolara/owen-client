@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,8 +11,8 @@ const Button = ({
   ...props
 }) => (
   <button
-    type='button'
-    className={`button ${className} ${type ? `is-${type}` : ''}`}
+    type={type}
+    className={`button ${className}`}
     aria-label={ariaLabel}
     {...props}
   >
@@ -33,7 +34,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  type: '',
+  type: 'button',
   icon: '',
   className: '',
   ariaLabel: '',
