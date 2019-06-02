@@ -9,7 +9,9 @@ const DescriptionInput = ({
       <button
         type='button'
         onClick={toggleDescription}
-        className={isOpen ? 'has-text-danger' : ''}
+        className={`button is-small is-inverted
+          ${isOpen ? 'is-danger' : 'is-link'
+        }`}
       >
         <span className='icon'>
           <i className={`mdi ${isOpen ? 'mdi-close' : 'mdi-plus'}`} />
