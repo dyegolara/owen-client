@@ -2,14 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import useAuth from 'hooks/useAuth';
+import { formatCurrency } from 'utils';
 
 const YOU_OWE_THEM = 'Debes';
 const THEY_OWE_YOU = 'Te deben';
-
-const formatCurrency = amount => new Intl.NumberFormat('es-MX', {
-  style: 'currency',
-  currency: 'MXN',
-}).format(amount);
 
 const Total = ({ total: { amount, to } }) => {
   const { getUserInfo } = useAuth();

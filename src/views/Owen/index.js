@@ -1,59 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { database } from '_firebase';
+import React from 'react';
 
 import Container from 'components/Container';
 import Form from 'components/Form';
 import Topbar from 'components/Topbar';
 import Total from 'components/Total';
-import useAuth from 'hooks/useAuth';
+import History from 'components/History';
+import { ActiveLedgerWrapper } from 'contexts/activeLedger';
+import useActiveLedger from 'hooks/useActiveLedger';
 
 const Owen = () => {
-  const [activeLedger, setActiveLedger] = useState(null);
-  const [ledgers, setLedgers] = useState([]);
-  const { getUserInfo } = useAuth();
-  const { userId } = getUserInfo();
-
-  const createNewUser = () => {
-    const { userName, email } = getUserInfo();
-    database.ref(`users/${userId}`).set({
-      name: userName,
-      email,
-    });
-  };
-
-  const addLedgersSuscription = () => {
-    database.ref('ledgers').on('value', (snapshot) => {
-      const dataValue = snapshot.val();
-      if (dataValue) {
-        const newLedgers = Object.keys(dataValue).map(key => ({
-          ...dataValue[key],
-          id: key,
-        }));
-        setLedgers(newLedgers);
-      }
-    });
-  };
-
-  const addActiveLedgerSuscription = () => {
-    if (!userId || ledgers.length === 0) return;
-    database
-      .ref('users')
-      .child(userId)
-      .on('value', (snapshot) => {
-        const user = snapshot.val();
-        if (user) {
-          const newActiveLedger = ledgers.find(
-            ({ id }) => id === user.activeLedger,
-          );
-          setActiveLedger(newActiveLedger);
-        } else {
-          createNewUser(userId);
-        }
-      });
-  };
-
-  useEffect(addLedgersSuscription, []);
-  useEffect(addActiveLedgerSuscription, [ledgers, userId]);
+  const { activeLedger, debts, ledgers } = useActiveLedger();
 
   return (
     <Container>
@@ -62,10 +18,17 @@ const Owen = () => {
         <>
           <Total total={activeLedger.total} />
           <Form activeLedger={activeLedger} />
+          <History debts={debts} />
         </>
       )}
     </Container>
   );
 };
 
-export default Owen;
+const OwenWithContext = () => (
+  <ActiveLedgerWrapper>
+    <Owen />
+  </ActiveLedgerWrapper>
+);
+
+export default OwenWithContext;
