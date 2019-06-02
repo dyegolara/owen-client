@@ -31,7 +31,7 @@ const Form = ({ activeLedger }) => {
 
   const handleDescriptionChange = (e) => {
     const { value } = e.target;
-    setAmount(value);
+    setDescription(value);
   };
 
   const toggleDescription = () => {
