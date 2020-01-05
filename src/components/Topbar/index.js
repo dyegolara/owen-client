@@ -1,16 +1,15 @@
 import React from 'react';
-
 import SignOut from 'components/SignOut';
 import Ledgers from 'components/Ledgers';
 import NewLedger from 'components/NewLedger';
-import StyledTopbar from 'components/Topbar/styles';
+import * as S from './styles';
 
 const Topbar = props => (
-  <StyledTopbar>
+  <S.Topbar>
     <SignOut />
     <Ledgers {...props} />
     <NewLedger />
-  </StyledTopbar>
+  </S.Topbar>
 );
 
 export default Topbar;

@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Debt from 'components/Debt';
 import Button from 'components/Button';
 import DebtShape from 'components/Debt/propTypes';
-import HistoryWrapper from 'components/History/styles';
+import * as S from './styles';
 
 const History = ({ debts }) => {
   const [showFullHistory, setShowFullHistory] = useState(false);
-
   const debtsToShow = showFullHistory ? debts : debts.slice(0, 10);
+
   return (
-    <HistoryWrapper>
+    <S.History>
       <ul>
         {debtsToShow.map(debt => (
           <Debt key={debt.id} debt={debt} />
@@ -25,7 +25,7 @@ const History = ({ debts }) => {
         Mostrar historial completo
       </Button>
       )}
-    </HistoryWrapper>
+    </S.History>
   );
 };
 

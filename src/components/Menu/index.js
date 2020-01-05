@@ -1,10 +1,7 @@
-// Librerías
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-// Componentes
 import MenuItem from 'components/Menu/MenuItem';
-// Estilos
 import styles from './Menu.module.scss';
 
 const Menu = ({ location, routes }) => (

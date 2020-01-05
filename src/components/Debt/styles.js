@@ -8,6 +8,4 @@ export const Debt = styled.li`
   }
 `;
 
-export default {
-  Debt,
-};
+export default { Debt };

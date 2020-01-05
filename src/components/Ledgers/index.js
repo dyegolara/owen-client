@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { database } from '_firebase';
-
-import LedgerShape from 'components/Ledgers/propTypes';
 import useAuth from 'hooks/useAuth';
+import LedgerShape from './propTypes';
 
 const SelectLedger = ({ activeLedger, ledgers }) => {
   const [isActive, setIsActive] = useState(false);
