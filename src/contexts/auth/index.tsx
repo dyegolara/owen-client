@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import store from "store";
 import { auth, googleAuthProvider } from "firebaseApi";
 
@@ -12,9 +11,31 @@ export const ACTIVE = "active";
 export const LOADING = "loading";
 export const INACTIVE = "inactive";
 
-const AuthContext = React.createContext({});
+interface AuthContextType {
+  login: Function;
+  sessionStatus: string;
+  getUserInfo: Function;
+  ACTIVE: string;
+  LOADING: string;
+  INACTIVE: string;
+}
 
-export const AuthContextWrapper = ({ children }) => {
+const AuthContext = React.createContext<AuthContextType>({
+  login: () => {},
+  sessionStatus: INACTIVE,
+  getUserInfo: () => {},
+  ACTIVE,
+  LOADING,
+  INACTIVE
+});
+const { Provider } = AuthContext;
+
+type User = Readonly<{
+  uid: string;
+  displayName: string | null;
+  email: string | null;
+}>;
+export function AuthContextWrapper(props: { children: JSX.Element }) {
   const [sessionStatus, setSessionStatus] = useState(store.get(SESSION_STATUS));
 
   const login = () => {
@@ -35,8 +56,10 @@ export const AuthContextWrapper = ({ children }) => {
   });
 
   useEffect(() => {
-    const setUserInfo = ({ displayName, email, uid }) => {
-      if (sessionStatus === ACTIVE) return;
+    const setUserInfo = ({ displayName, email, uid }: User) => {
+      if (sessionStatus === ACTIVE) {
+        return;
+      }
       store.set(ID_KEY, uid);
       store.set(EMAIL_KEY, email);
       store.set(USER_NAME_KEY, displayName);
@@ -48,24 +71,16 @@ export const AuthContextWrapper = ({ children }) => {
     // eslint-disable-next-line
   }, []);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        login,
-        sessionStatus,
-        getUserInfo,
-        ACTIVE,
-        LOADING,
-        INACTIVE
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  const value = {
+    login,
+    sessionStatus,
+    getUserInfo,
+    ACTIVE,
+    LOADING,
+    INACTIVE
+  };
 
-AuthContextWrapper.propTypes = {
-  children: PropTypes.node.isRequired
-};
+  return <Provider value={value as AuthContextType}>{props.children}</Provider>;
+}
 
 export default AuthContext;
