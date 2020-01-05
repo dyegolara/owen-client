@@ -7,7 +7,7 @@ import Button from "components/Button";
 import useAuth from "hooks/useAuth";
 import LedgerShape from "components/Ledgers/propTypes";
 
-const Form = ({ activeLedger }) => {
+export default function Form({ activeLedger }) {
   const { getUserInfo } = useAuth();
   const { userId } = getUserInfo();
   const [amount, setAmount] = useState("");
@@ -122,10 +122,8 @@ const Form = ({ activeLedger }) => {
       </div>
     </div>
   );
-};
+}
 
 Form.propTypes = {
   activeLedger: LedgerShape.isRequired
 };
-
-export default Form;

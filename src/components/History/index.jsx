@@ -6,7 +6,7 @@ import Button from "components/Button";
 import DebtShape from "components/Debt/propTypes";
 import * as S from "./styled";
 
-const History = ({ debts }) => {
+export default function History({ debts }) {
   const [showFullHistory, setShowFullHistory] = useState(false);
   const debtsToShow = showFullHistory ? debts : debts.slice(0, 10);
 
@@ -27,10 +27,8 @@ const History = ({ debts }) => {
       )}
     </S.History>
   );
-};
+}
 
 History.propTypes = {
   debts: PropTypes.arrayOf(DebtShape).isRequired
 };
-
-export default History;

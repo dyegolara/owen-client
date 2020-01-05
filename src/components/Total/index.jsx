@@ -7,7 +7,7 @@ import { formatCurrency } from "utils";
 const YOU_OWE_THEM = "Debes";
 const THEY_OWE_YOU = "Te deben";
 
-const Total = ({ total: { amount, to } }) => {
+export default function Total({ total: { amount, to } }) {
   const { getUserInfo } = useAuth();
 
   const getTotalLabel = () => {
@@ -28,7 +28,7 @@ const Total = ({ total: { amount, to } }) => {
       </div>
     </div>
   );
-};
+}
 
 Total.propTypes = {
   total: PropTypes.shape({
@@ -36,5 +36,3 @@ Total.propTypes = {
     to: PropTypes.string.isRequired
   }).isRequired
 };
-
-export default Total;

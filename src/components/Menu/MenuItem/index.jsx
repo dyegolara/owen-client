@@ -2,12 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as S from "./styled";
 
-const MenuItem = ({ label, route, icon, location: { pathname } }) => (
-  <S.Item to={route} active={pathname === route}>
-    <i className={`mdi ${icon}`} />
-    <S.Label>{label}</S.Label>
-  </S.Item>
-);
+export default function MenuItem({
+  label,
+  route,
+  icon,
+  location: { pathname }
+}) {
+  return (
+    <S.Item to={route} active={pathname === route}>
+      <i className={`mdi ${icon}`} />
+      <S.Label>{label}</S.Label>
+    </S.Item>
+  );
+}
 
 MenuItem.propTypes = {
   location: PropTypes.shape({
@@ -23,5 +30,3 @@ MenuItem.defaultProps = {
   route: "",
   icon: ""
 };
-
-export default MenuItem;

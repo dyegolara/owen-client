@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Modal = ({
+export default function Modal({
   isActive,
   toggleModal,
   onSubmit,
@@ -11,7 +11,7 @@ const Modal = ({
   secondaryButton,
   children,
   requestInProgress
-}) => {
+}) {
   const header = (
     <header className="modal-card-head">
       <p className="modal-card-title">{title}</p>
@@ -55,7 +55,7 @@ const Modal = ({
       </div>
     </div>
   );
-};
+}
 
 Modal.propTypes = {
   toggleModal: PropTypes.func.isRequired,
@@ -79,5 +79,3 @@ Modal.defaultProps = {
   requestInProgress: false,
   children: null
 };
-
-export default Modal;

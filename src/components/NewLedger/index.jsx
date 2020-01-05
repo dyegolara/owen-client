@@ -6,7 +6,7 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import useAuth from "hooks/useAuth";
 
-const NewLedger = () => {
+export default function NewLedger() {
   const [friendName, setFriendName] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const { getUserInfo } = useAuth();
@@ -76,6 +76,4 @@ const NewLedger = () => {
       </Modal>
     </>
   );
-};
-
-export default NewLedger;
+}

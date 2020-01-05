@@ -4,7 +4,7 @@ import { database } from "_firebase";
 import useAuth from "hooks/useAuth";
 import LedgerShape from "./propTypes";
 
-const SelectLedger = ({ activeLedger, ledgers }) => {
+export default function SelectLedger({ activeLedger, ledgers }) {
   const [isActive, setIsActive] = useState(false);
   const { getUserInfo } = useAuth();
   const { userId } = getUserInfo();
@@ -62,7 +62,7 @@ const SelectLedger = ({ activeLedger, ledgers }) => {
       </div>
     </div>
   );
-};
+}
 
 SelectLedger.propTypes = {
   activeLedger: LedgerShape,
@@ -72,5 +72,3 @@ SelectLedger.propTypes = {
 SelectLedger.defaultProps = {
   activeLedger: null
 };
-
-export default SelectLedger;
