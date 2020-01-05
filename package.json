@@ -10,12 +10,17 @@
     "lint": "npx prettier 'src/**/*.{js,jsx,css,json}' --write"
   },
   "dependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.4",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
     "firebase": "^7.6.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "5.0.0",
     "store": "^2.0.12",
     "styled-components": "^4.4.1",
+    "typescript": "^3.7.4",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
