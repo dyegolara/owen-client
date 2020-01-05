@@ -17,15 +17,6 @@ const AuthContext = React.createContext({});
 export const AuthContextWrapper = ({ children }) => {
   const [sessionStatus, setSessionStatus] = useState(store.get(SESSION_STATUS));
 
-  const setUserInfo = ({ displayName, email, uid }) => {
-    if (sessionStatus === ACTIVE) return;
-    store.set(ID_KEY, uid);
-    store.set(EMAIL_KEY, email);
-    store.set(USER_NAME_KEY, displayName);
-    store.set(SESSION_STATUS, ACTIVE);
-    setSessionStatus(ACTIVE);
-  };
-
   const login = () => {
     store.set(SESSION_STATUS, LOADING);
     setSessionStatus(LOADING);
@@ -37,17 +28,27 @@ export const AuthContextWrapper = ({ children }) => {
     setSessionStatus(INACTIVE);
   };
 
-  useEffect(() => {
-    auth.onAuthStateChanged(user => (
-      user ? setUserInfo(user) : logout()
-    ));
-  }, []);
-
   const getUserInfo = () => ({
     [ID_KEY]: store.get(ID_KEY),
     [EMAIL_KEY]: store.get(EMAIL_KEY),
     [USER_NAME_KEY]: store.get(USER_NAME_KEY),
   });
+
+  useEffect(() => {
+    const setUserInfo = ({ displayName, email, uid }) => {
+      if (sessionStatus === ACTIVE) return;
+      store.set(ID_KEY, uid);
+      store.set(EMAIL_KEY, email);
+      store.set(USER_NAME_KEY, displayName);
+      store.set(SESSION_STATUS, ACTIVE);
+      setSessionStatus(ACTIVE);
+    };
+
+    auth.onAuthStateChanged(user => (
+      user ? setUserInfo(user) : logout()
+    ));
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <AuthContext.Provider value={{
