@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import MenuItem from 'components/Menu/MenuItem';
-import styles from './Menu.module.scss';
+import * as S from './styled';
 
 const Menu = ({ location, routes }) => (
-  <div className={styles.wrapper}>
+  <S.Menu>
     {routes.map(item => (
       <MenuItem {...item} key={item.label} location={location} />
     ))}
-  </div>
+  </S.Menu>
 );
 
 Menu.propTypes = {

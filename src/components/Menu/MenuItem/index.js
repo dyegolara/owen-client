@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import styles from './Menu.module.scss';
+import * as S from './styled';
 
 const MenuItem = ({
   label, route, icon, location: { pathname },
 }) => (
-  <Link
-    to={route}
-    className={`${styles.item} ${pathname === route ? styles.activeItem : ''}`}
-  >
+  <S.Item to={route} active={pathname === route}>
     <i className={`mdi ${icon}`} />
-    <span className={styles.label}>{label}</span>
-  </Link>
+    <S.Label>{label}</S.Label>
+  </S.Item>
 );
 
 MenuItem.propTypes = {
