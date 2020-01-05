@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import Button from 'components/Button';
-import LoginWrapper from 'views/Login/styles';
-import useAuth from 'hooks/useAuth';
+import Button from "components/Button";
+import LoginWrapper from "views/Login/styles";
+import useAuth from "hooks/useAuth";
 
 const Login = () => {
   const { sessionStatus, login, LOADING } = useAuth();
 
   return (
-    <LoginWrapper className='hero is-fullheight is-bold is-link'>
+    <LoginWrapper className="hero is-fullheight is-bold is-link">
       <Button
-        className={`is-medium ${sessionStatus === LOADING ? 'is-loading' : ''}`}
+        className={`is-medium ${sessionStatus === LOADING ? "is-loading" : ""}`}
         onClick={login}
-        icon='google'
+        icon="google"
       >
-          Iniciar sesión
+        Iniciar sesión
       </Button>
     </LoginWrapper>
   );

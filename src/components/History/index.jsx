@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-import Debt from 'components/Debt';
-import Button from 'components/Button';
-import DebtShape from 'components/Debt/propTypes';
-import * as S from './styled';
+import Debt from "components/Debt";
+import Button from "components/Button";
+import DebtShape from "components/Debt/propTypes";
+import * as S from "./styled";
 
 const History = ({ debts }) => {
   const [showFullHistory, setShowFullHistory] = useState(false);
@@ -18,19 +18,19 @@ const History = ({ debts }) => {
         ))}
       </ul>
       {!showFullHistory && (
-      <Button
-        className='is-inverted is-link is-fullwidth'
-        onClick={() => setShowFullHistory(true)}
-      >
-        Mostrar historial completo
-      </Button>
+        <Button
+          className="is-inverted is-link is-fullwidth"
+          onClick={() => setShowFullHistory(true)}
+        >
+          Mostrar historial completo
+        </Button>
       )}
     </S.History>
   );
 };
 
 History.propTypes = {
-  debts: PropTypes.arrayOf(DebtShape).isRequired,
+  debts: PropTypes.arrayOf(DebtShape).isRequired
 };
 
 export default History;

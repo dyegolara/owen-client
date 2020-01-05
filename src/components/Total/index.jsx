@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import useAuth from 'hooks/useAuth';
-import { formatCurrency } from 'utils';
+import useAuth from "hooks/useAuth";
+import { formatCurrency } from "utils";
 
-const YOU_OWE_THEM = 'Debes';
-const THEY_OWE_YOU = 'Te deben';
+const YOU_OWE_THEM = "Debes";
+const THEY_OWE_YOU = "Te deben";
 
 const Total = ({ total: { amount, to } }) => {
   const { getUserInfo } = useAuth();
@@ -17,14 +17,12 @@ const Total = ({ total: { amount, to } }) => {
   };
 
   return (
-    <div className='section flex-center'>
-      <div className='level'>
-        <div className='level-item has-text-centered'>
+    <div className="section flex-center">
+      <div className="level">
+        <div className="level-item has-text-centered">
           <div>
-            <p className='heading'>{getTotalLabel()}</p>
-            <p className='title is-1'>
-              {formatCurrency(amount)}
-            </p>
+            <p className="heading">{getTotalLabel()}</p>
+            <p className="title is-1">{formatCurrency(amount)}</p>
           </div>
         </div>
       </div>
@@ -35,8 +33,8 @@ const Total = ({ total: { amount, to } }) => {
 Total.propTypes = {
   total: PropTypes.shape({
     amount: PropTypes.number.isRequired,
-    to: PropTypes.string.isRequired,
-  }).isRequired,
+    to: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default Total;

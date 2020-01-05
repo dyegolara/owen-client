@@ -6,7 +6,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "lint": "npx prettier 'src/**/*.{js,jsx,css,json}' --write"
   },
   "dependencies": {
     "firebase": "^7.6.1",

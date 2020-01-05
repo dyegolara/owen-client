@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { database } from '_firebase';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { database } from "_firebase";
 
-import useAuth from 'hooks/useAuth';
+import useAuth from "hooks/useAuth";
 
 const ActiveLedgerContext = React.createContext({});
 
@@ -17,15 +17,15 @@ export const ActiveLedgerWrapper = ({ children }) => {
     const { userName, email } = getUserInfo();
     database.ref(`users/${userId}`).set({
       name: userName,
-      email,
+      email
     });
   };
 
-  const handleActiveLedgerChange = (snapshot) => {
+  const handleActiveLedgerChange = snapshot => {
     const user = snapshot.val();
     if (user) {
       const newActiveLedger = ledgers.find(
-        ({ id }) => id === user.activeLedger,
+        ({ id }) => id === user.activeLedger
       );
       setActiveLedger(newActiveLedger);
     } else {
@@ -34,12 +34,12 @@ export const ActiveLedgerWrapper = ({ children }) => {
   };
 
   const addLedgersSuscription = () => {
-    database.ref('ledgers').on('value', (snapshot) => {
+    database.ref("ledgers").on("value", snapshot => {
       const dataValue = snapshot.val();
       if (dataValue) {
         const newLedgers = Object.entries(dataValue).map(([key, value]) => ({
           id: key,
-          ...value,
+          ...value
         }));
         setLedgers(newLedgers);
       }
@@ -49,9 +49,9 @@ export const ActiveLedgerWrapper = ({ children }) => {
   const addActiveLedgerSuscription = () => {
     if (!userId || ledgers.length === 0) return;
     database
-      .ref('users')
+      .ref("users")
       .child(userId)
-      .on('value', handleActiveLedgerChange);
+      .on("value", handleActiveLedgerChange);
   };
 
   const setDebtsList = () => {
@@ -60,7 +60,7 @@ export const ActiveLedgerWrapper = ({ children }) => {
       .map(([key, value]) => ({
         id: key,
         ...value,
-        date: new Date(value.created).toLocaleDateString('es-MX'),
+        date: new Date(value.created).toLocaleDateString("es-MX")
       }))
       .sort((a, b) => new Date(b.created) - new Date(a.created));
     setDebts(debtsList);
@@ -78,7 +78,7 @@ export const ActiveLedgerWrapper = ({ children }) => {
 };
 
 ActiveLedgerWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default ActiveLedgerContext;

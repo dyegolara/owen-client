@@ -1,9 +1,5 @@
-import styled from 'styled-components';
-import {
-  desktopWidth,
-  menuHeight,
-  menuWidth,
-} from 'styles/variables';
+import styled from "styled-components";
+import { desktopWidth, menuHeight, menuWidth } from "styles/variables";
 
 export const Menu = styled.div`
   position: fixed;

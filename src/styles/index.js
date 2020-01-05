@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
-import 'styles/minireset.css';
-import 'styles/commons.css';
+import { createGlobalStyle } from "styled-components";
+import "styles/minireset.css";
+import "styles/commons.css";
 
 const GlobalStyle = createGlobalStyle`
 * {

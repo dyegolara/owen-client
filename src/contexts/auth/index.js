@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import store from 'store';
-import { auth, googleAuthProvider } from '_firebase';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import store from "store";
+import { auth, googleAuthProvider } from "_firebase";
 
-const ID_KEY = 'userId';
-const EMAIL_KEY = 'email';
-const USER_NAME_KEY = 'userName';
-const SESSION_STATUS = 'sessionStatus';
+const ID_KEY = "userId";
+const EMAIL_KEY = "email";
+const USER_NAME_KEY = "userName";
+const SESSION_STATUS = "sessionStatus";
 
-export const ACTIVE = 'active';
-export const LOADING = 'loading';
-export const INACTIVE = 'inactive';
+export const ACTIVE = "active";
+export const LOADING = "loading";
+export const INACTIVE = "inactive";
 
 const AuthContext = React.createContext({});
 
@@ -31,7 +31,7 @@ export const AuthContextWrapper = ({ children }) => {
   const getUserInfo = () => ({
     [ID_KEY]: store.get(ID_KEY),
     [EMAIL_KEY]: store.get(EMAIL_KEY),
-    [USER_NAME_KEY]: store.get(USER_NAME_KEY),
+    [USER_NAME_KEY]: store.get(USER_NAME_KEY)
   });
 
   useEffect(() => {
@@ -44,21 +44,20 @@ export const AuthContextWrapper = ({ children }) => {
       setSessionStatus(ACTIVE);
     };
 
-    auth.onAuthStateChanged(user => (
-      user ? setUserInfo(user) : logout()
-    ));
+    auth.onAuthStateChanged(user => (user ? setUserInfo(user) : logout()));
     // eslint-disable-next-line
   }, []);
 
   return (
-    <AuthContext.Provider value={{
-      login,
-      sessionStatus,
-      getUserInfo,
-      ACTIVE,
-      LOADING,
-      INACTIVE,
-    }}
+    <AuthContext.Provider
+      value={{
+        login,
+        sessionStatus,
+        getUserInfo,
+        ACTIVE,
+        LOADING,
+        INACTIVE
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -66,7 +65,7 @@ export const AuthContextWrapper = ({ children }) => {
 };
 
 AuthContextWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default AuthContext;

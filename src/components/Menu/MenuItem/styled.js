@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
-import { desktopWidth } from 'styles/variables';
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import { desktopWidth } from "styles/variables";
 
 export const Item = styled(Link)`
   display: flex;
@@ -12,9 +12,11 @@ export const Item = styled(Link)`
   margin: 0.25rem;
   text-decoration: none;
   border-radius: 5px;
-  ${({ active }) => active && css`
-    background-color: rgba(grey, 0.2);
-  `}
+  ${({ active }) =>
+    active &&
+    css`
+      background-color: rgba(grey, 0.2);
+    `}
 
   &:hover {
     color: grey;
@@ -32,7 +34,7 @@ export const Item = styled(Link)`
 `;
 
 export const Label = styled.span`
-  font-size: 0.75rem; 
+  font-size: 0.75rem;
   @media (min-width: ${desktopWidth}) {
     margin-left: 1rem;
     font-size: 0.875rem;

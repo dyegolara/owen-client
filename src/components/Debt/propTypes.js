@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const DebtShape = PropTypes.shape({
   amount: PropTypes.number.isRequired,
@@ -7,7 +7,7 @@ const DebtShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   description: PropTypes.string,
-  completed: PropTypes.bool,
+  completed: PropTypes.bool
 });
 
 export default DebtShape;

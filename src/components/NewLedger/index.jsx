@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import uuid from 'uuid';
-import { database } from '_firebase';
+import React, { useState } from "react";
+import uuid from "uuid";
+import { database } from "_firebase";
 
-import Button from 'components/Button';
-import Modal from 'components/Modal';
-import useAuth from 'hooks/useAuth';
+import Button from "components/Button";
+import Modal from "components/Modal";
+import useAuth from "hooks/useAuth";
 
 const NewLedger = () => {
-  const [friendName, setFriendName] = useState('');
+  const [friendName, setFriendName] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const { getUserInfo } = useAuth();
 
@@ -15,7 +15,7 @@ const NewLedger = () => {
     setModalOpen(current => !current);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { value } = e.target;
     setFriendName(value);
   };
@@ -25,29 +25,29 @@ const NewLedger = () => {
     const userRef = database.ref(`users/${userId}`);
     const newLedgerId = database
       .ref()
-      .child('ledgers')
+      .child("ledgers")
       .push().key;
     database.ref(`ledgers/${newLedgerId}`).set({
-      color: '#5f7eaf',
+      color: "#5f7eaf",
       users: {
         [userId]: userName,
-        [uuid()]: friendName,
+        [uuid()]: friendName
       },
       modified: new Date().toISOString(),
       total: {
         amount: 0,
-        to: userId,
-      },
+        to: userId
+      }
     });
     userRef.child(`ledgers/${newLedgerId}`).set(true);
-    userRef.child('activeLedger').set(newLedgerId);
+    userRef.child("activeLedger").set(newLedgerId);
   };
 
   return (
     <>
-      <Button icon='plus' onClick={toggleModal} />
+      <Button icon="plus" onClick={toggleModal} />
       <Modal
-        title='Agregar Ledger'
+        title="Agregar Ledger"
         isActive={modalOpen}
         toggleModal={toggleModal}
         onSubmit={handleSubmit}
@@ -55,19 +55,19 @@ const NewLedger = () => {
         <form>
           <p>Color Picker</p>
           <p>Anonymous ? friendName : friendEmail</p>
-          <div className='field'>
-            <label className='label' htmlFor='newLedger'>
+          <div className="field">
+            <label className="label" htmlFor="newLedger">
               <span>Nombre de tu amigo</span>
-              <div className='control has-icons-left'>
+              <div className="control has-icons-left">
                 <input
-                  id='newLedger'
-                  type='text'
-                  className='input'
+                  id="newLedger"
+                  type="text"
+                  className="input"
                   value={friendName}
                   onChange={handleInputChange}
                 />
-                <span className='icon is-small is-left'>
-                  <i className='mdi mdi-account' />
+                <span className="icon is-small is-left">
+                  <i className="mdi mdi-account" />
                 </span>
               </div>
             </label>

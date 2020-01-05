@@ -1,15 +1,8 @@
 /* eslint-disable react/button-has-type */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const Button = ({
-  type,
-  icon,
-  className,
-  ariaLabel,
-  children,
-  ...props
-}) => (
+const Button = ({ type, icon, className, ariaLabel, children, ...props }) => (
   <button
     type={type}
     className={`button ${className}`}
@@ -17,7 +10,7 @@ const Button = ({
     {...props}
   >
     {icon && (
-      <span className='icon is-small'>
+      <span className="icon is-small">
         <i className={`mdi mdi-${icon}`} />
       </span>
     )}
@@ -30,15 +23,15 @@ Button.propTypes = {
   icon: PropTypes.string,
   className: PropTypes.string,
   ariaLabel: PropTypes.string,
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 Button.defaultProps = {
-  type: 'button',
-  icon: '',
-  className: '',
-  ariaLabel: '',
-  children: null,
+  type: "button",
+  icon: "",
+  className: "",
+  ariaLabel: "",
+  children: null
 };
 
 export default Button;
