@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { database } from "_firebase";
+import { database } from "firebaseApi";
 
 import useAuth from "hooks/useAuth";
 

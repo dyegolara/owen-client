@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import uuid from "uuid";
-import { database } from "_firebase";
+import { database } from "firebaseApi";
 
 import Button from "components/Button";
 import Modal from "components/Modal";

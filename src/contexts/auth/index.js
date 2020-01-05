@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import store from "store";
-import { auth, googleAuthProvider } from "_firebase";
+import { auth, googleAuthProvider } from "firebaseApi";
 
 const ID_KEY = "userId";
 const EMAIL_KEY = "email";

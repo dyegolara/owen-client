@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "_firebase";
+import { auth } from "firebaseApi";
 import Button from "components/Button";
 
 export default function SignOut() {

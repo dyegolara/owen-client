@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { database } from "_firebase";
+import { database } from "firebaseApi";
 
 import AmountInput from "components/Form/AmountInput";
 import DescriptionInput from "components/Form/DescriptionInput";
