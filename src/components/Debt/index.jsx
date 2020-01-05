@@ -1,7 +1,7 @@
 import React from 'react';
 import useActiveLedger from 'hooks/useActiveLedger';
 import { formatCurrency } from 'utils';
-import * as S from './styles';
+import * as S from './styled';
 import DebtShape from './propTypes';
 
 const Debt = ({ debt }) => {

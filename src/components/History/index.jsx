@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Debt from 'components/Debt';
 import Button from 'components/Button';
 import DebtShape from 'components/Debt/propTypes';
-import * as S from './styles';
+import * as S from './styled';
 
 const History = ({ debts }) => {
   const [showFullHistory, setShowFullHistory] = useState(false);
