@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledDebt = styled.li`
+export const Debt = styled.li`
   padding: 2rem 0;
   margin: 0 1rem;
   &:not(:last-child){
@@ -8,4 +8,6 @@ const StyledDebt = styled.li`
   }
 `;
 
-export default StyledDebt;
+export default {
+  Debt,
+};

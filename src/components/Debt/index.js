@@ -1,21 +1,24 @@
 import React from 'react';
-
-import StyledDebt from 'components/Debt/styles';
-import DebtShape from 'components/Debt/propTypes';
+import useActiveLedger from 'hooks/useActiveLedger';
 import { formatCurrency } from 'utils';
+import * as S from './styles';
+import DebtShape from './propTypes';
 
-const Debt = ({ debt }) => (
-  <StyledDebt>
-    <div>
-      <span>name</span>
-      <span>fecha</span>
-    </div>
-    <div>
-      <span className='title is-5'>{formatCurrency(debt.amount)}</span>
-    </div>
-    <p>{debt.description}</p>
-  </StyledDebt>
-);
+const Debt = ({ debt }) => {
+  const { activeLedger: { users } } = useActiveLedger();
+  return (
+    <S.Debt>
+      <div className='flex-between'>
+        <span>{`Para: ${users[debt.to]}`}</span>
+        <span>{debt.date}</span>
+      </div>
+      <div>
+        <span className='title is-5'>{formatCurrency(debt.amount)}</span>
+      </div>
+      <p>{debt.description}</p>
+    </S.Debt>
+  );
+};
 
 Debt.propTypes = {
   debt: DebtShape.isRequired,
