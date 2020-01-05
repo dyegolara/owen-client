@@ -60,6 +60,7 @@ export const ActiveLedgerWrapper = ({ children }) => {
       .map(([key, value]) => ({
         id: key,
         ...value,
+        date: new Date(value.created).toLocaleDateString('es-MX'),
       }))
       .sort((a, b) => new Date(b.created) - new Date(a.created));
     setDebts(debtsList);
