@@ -8,3 +8,5 @@ coverage/
 \.env
 \.env\.test
 yarn-error\.log
+
+.vscode/
