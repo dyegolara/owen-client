@@ -1,11 +1,11 @@
 import React from "react";
 
 type Props = {
-  onChange: (event: React.SyntheticEvent<Element, Event>) => void
-  toggleDescription: () => void
-  isOpen: boolean
-  value: string
-}
+  onChange: (event: React.SyntheticEvent<Element, Event>) => void;
+  toggleDescription: () => void;
+  isOpen: boolean;
+  value: string;
+};
 
 export default function DescriptionInput({
   isOpen,

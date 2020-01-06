@@ -1,5 +1,5 @@
 import { findKey } from "lodash";
-import {Ledger} from "types";
+import { Ledger } from "types";
 
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("es-MX", {

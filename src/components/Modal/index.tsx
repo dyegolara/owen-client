@@ -1,16 +1,16 @@
 import React from "react";
 
 type Props = {
-  toggleModal: () => void,
-  isActive: boolean,
-  onSubmit: () => void,
-  title: string,
-  noFooter: boolean,
-  primaryButton: string,
-  secondaryButton: string,
-  requestInProgress: boolean,
-  children: React.ReactNode
-}
+  toggleModal: () => void;
+  isActive: boolean;
+  onSubmit: () => void;
+  title: string;
+  noFooter: boolean;
+  primaryButton: string;
+  secondaryButton: string;
+  requestInProgress: boolean;
+  children: React.ReactNode;
+};
 
 export default function Modal({
   isActive,

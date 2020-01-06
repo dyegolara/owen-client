@@ -1,10 +1,10 @@
 import React from "react";
 
 type Props = {
-  onChange: (event: React.SyntheticEvent<Element, Event>) => void
-  value: string,
-  isValid: boolean
-}
+  onChange: (event: React.SyntheticEvent<Element, Event>) => void;
+  value: string;
+  isValid: boolean;
+};
 
 export default function AmountInput({ onChange, value, isValid }: Props) {
   return (
