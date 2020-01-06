@@ -1,7 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-export default function AmountInput({ onChange, value, isValid }) {
+type Props = {
+  onChange: (event: React.SyntheticEvent<Element, Event>) => void
+  value: string,
+  isValid: boolean
+}
+
+export default function AmountInput({ onChange, value, isValid }: Props) {
   return (
     <div className="field">
       <p className="control has-icons-left">
@@ -22,12 +27,6 @@ export default function AmountInput({ onChange, value, isValid }) {
     </div>
   );
 }
-
-AmountInput.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isValid: PropTypes.bool
-};
 
 AmountInput.defaultProps = {
   value: "",
