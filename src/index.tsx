@@ -8,7 +8,7 @@ import useAuth from "hooks/useAuth";
 
 import GlobalStyle from "styles";
 
-const App = () => {
+function App() {
   const { sessionStatus, ACTIVE } = useAuth();
 
   return (
@@ -17,12 +17,14 @@ const App = () => {
       {sessionStatus === ACTIVE ? <Owen /> : <Login />}
     </>
   );
-};
+}
 
-const AppWithAuth = () => (
-  <AuthContextWrapper>
-    <App />
-  </AuthContextWrapper>
-);
+function AppWithAuth() {
+  return (
+    <AuthContextWrapper>
+      <App />
+    </AuthContextWrapper>
+  );
+}
 
 render(<AppWithAuth />, document.getElementById("app"));

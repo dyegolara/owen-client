@@ -8,7 +8,7 @@ import History from "components/History";
 import { ActiveLedgerWrapper } from "contexts/activeLedger";
 import useActiveLedger from "hooks/useActiveLedger";
 
-const Owen = () => {
+function Owen() {
   const { activeLedger, debts, ledgers } = useActiveLedger();
 
   return (
@@ -23,12 +23,14 @@ const Owen = () => {
       )}
     </Container>
   );
-};
+}
 
-const OwenWithContext = () => (
-  <ActiveLedgerWrapper>
-    <Owen />
-  </ActiveLedgerWrapper>
-);
+function OwenWithContext() {
+  return (
+    <ActiveLedgerWrapper>
+      <Owen />
+    </ActiveLedgerWrapper>
+  );
+}
 
 export default OwenWithContext;

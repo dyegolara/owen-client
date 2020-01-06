@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import ActiveLedgerContext from "contexts/activeLedger";
+import { IActiveLedger } from "types";
 
-const useActiveLedger = () => useContext(ActiveLedgerContext);
+function useActiveLedger(): IActiveLedger {
+  return useContext(ActiveLedgerContext);
+}
 
 export default useActiveLedger;

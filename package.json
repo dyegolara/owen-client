@@ -7,10 +7,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "npx prettier 'src/**/*.{js,jsx,css,json}' --write"
+    "lint": "npx prettier 'src/**/*.{js,jsx,ts,tsx,css,json}' --write"
   },
   "dependencies": {
     "firebase": "^7.6.1",
+    "lodash": "^4.17.15",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "5.0.0",
@@ -19,8 +20,17 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.1.4",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "@types/store": "^2.0.2",
+    "@types/styled-components": "^4.4.1",
+    "@types/uuid": "^3.4.6",
     "prop-types": "^15.7.2",
-    "react-scripts": "^3.3.0"
+    "react-scripts": "^3.3.0",
+    "typescript": "^3.7.4"
   },
   "browserslist": {
     "development": [

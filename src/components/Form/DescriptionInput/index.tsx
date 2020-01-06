@@ -1,12 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
+
+type Props = {
+  onChange: (event: React.SyntheticEvent<Element, Event>) => void;
+  toggleDescription: () => void;
+  isOpen: boolean;
+  value: string;
+};
 
 export default function DescriptionInput({
   isOpen,
   value,
   onChange,
   toggleDescription
-}) {
+}: Props) {
   return (
     <div className="field">
       <div className="control has-text-centered ">
@@ -35,13 +41,6 @@ export default function DescriptionInput({
     </div>
   );
 }
-
-DescriptionInput.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  toggleDescription: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool,
-  value: PropTypes.string
-};
 
 DescriptionInput.defaultProps = {
   isOpen: false,

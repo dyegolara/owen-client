@@ -5,5 +5,3 @@ export const History = styled.div`
   margin-top: 6rem;
   margin-bottom: 1rem;
 `;
-
-export default { History };

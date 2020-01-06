@@ -15,8 +15,8 @@ export default function NewLedger() {
     setModalOpen(current => !current);
   };
 
-  const handleInputChange = e => {
-    const { value } = e.target;
+  const handleInputChange = (event: React.SyntheticEvent): void => {
+    const { value } = event.target as HTMLInputElement;
     setFriendName(value);
   };
 

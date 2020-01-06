@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { database } from "firebaseApi";
 import useAuth from "hooks/useAuth";
-import LedgerShape from "./propTypes";
+import { getFriendId } from "utils";
+import { Ledger } from "types";
 
-export default function SelectLedger({ activeLedger, ledgers }) {
+type Props = {
+  activeLedger: Ledger;
+  ledgers: Ledger[];
+};
+
+export default function SelectLedger({ activeLedger, ledgers }: Props) {
   const [isActive, setIsActive] = useState(false);
   const { getUserInfo } = useAuth();
   const { userId } = getUserInfo();
@@ -13,16 +18,18 @@ export default function SelectLedger({ activeLedger, ledgers }) {
     setIsActive(current => !current);
   };
 
-  const setActiveLedger = ledgerId => {
+  const setActiveLedger = (ledgerId: string): void => {
     toggleDropdown();
     database.ref(`users/${userId}`).update({
       activeLedger: ledgerId
     });
   };
 
-  const getFriendName = ledger => {
-    if (ledgers.length === 0 || !ledger) return "";
-    const friendId = Object.keys(ledger.users).find(id => id !== userId);
+  const getFriendName = (ledger: Ledger): string => {
+    if (ledgers.length === 0 || !ledger) {
+      return "";
+    }
+    const friendId = getFriendId(activeLedger, userId);
     return ledger.users[friendId];
   };
 
@@ -63,11 +70,6 @@ export default function SelectLedger({ activeLedger, ledgers }) {
     </div>
   );
 }
-
-SelectLedger.propTypes = {
-  activeLedger: LedgerShape,
-  ledgers: PropTypes.arrayOf(LedgerShape).isRequired
-};
 
 SelectLedger.defaultProps = {
   activeLedger: null

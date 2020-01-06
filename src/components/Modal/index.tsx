@@ -1,5 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
+
+type Props = {
+  toggleModal: () => void;
+  isActive: boolean;
+  onSubmit: () => void;
+  title: string;
+  noFooter: boolean;
+  primaryButton: string;
+  secondaryButton: string;
+  requestInProgress: boolean;
+  children: React.ReactNode;
+};
 
 export default function Modal({
   isActive,
@@ -11,7 +22,7 @@ export default function Modal({
   secondaryButton,
   children,
   requestInProgress
-}) {
+}: Props) {
   const header = (
     <header className="modal-card-head">
       <p className="modal-card-title">{title}</p>
@@ -56,18 +67,6 @@ export default function Modal({
     </div>
   );
 }
-
-Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  isActive: PropTypes.bool,
-  onSubmit: PropTypes.func,
-  title: PropTypes.string,
-  noFooter: PropTypes.bool,
-  primaryButton: PropTypes.string,
-  secondaryButton: PropTypes.string,
-  requestInProgress: PropTypes.bool,
-  children: PropTypes.node
-};
 
 Modal.defaultProps = {
   isActive: false,
