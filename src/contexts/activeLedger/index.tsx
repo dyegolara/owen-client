@@ -3,32 +3,6 @@ import PropTypes from "prop-types";
 import { database } from "firebaseApi";
 import useAuth from "hooks/useAuth";
 
-type Debt = {
-  id: string;
-  amount: number;
-  completed: boolean;
-  created: string;
-  description: string;
-  to: string;
-  date: string;
-};
-type Ledger = {
-  color: string;
-  id: string;
-  modified: string;
-  total: {
-    amount: number;
-    to: string;
-  };
-  users: object;
-  debts: object;
-};
-interface ActiveLedgerType {
-  activeLedger: Ledger | undefined;
-  debts: Debt[];
-  ledgers: Ledger[];
-}
-
 const ActiveLedgerContext = React.createContext<ActiveLedgerType>({
   activeLedger: undefined,
   debts: [],

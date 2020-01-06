@@ -11,25 +11,6 @@ export const ACTIVE = "active";
 export const LOADING = "loading";
 export const INACTIVE = "inactive";
 
-type User = {
-  uid: string;
-  displayName: string | null;
-  email: string | null;
-};
-type UserInfo = {
-  [ID_KEY]: string;
-  [EMAIL_KEY]: string;
-  [USER_NAME_KEY]: string;
-};
-interface AuthContextType {
-  login: () => void;
-  sessionStatus: string;
-  getUserInfo: () => UserInfo;
-  ACTIVE: string;
-  LOADING: string;
-  INACTIVE: string;
-}
-
 const AuthContext = React.createContext<AuthContextType>({
   login: () => {},
   sessionStatus: INACTIVE,
