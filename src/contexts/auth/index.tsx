@@ -20,7 +20,7 @@ type UserInfo = {
   [ID_KEY]: string;
   [EMAIL_KEY]: string;
   [USER_NAME_KEY]: string;
-}
+};
 interface AuthContextType {
   login: () => void;
   sessionStatus: string;
@@ -34,15 +34,14 @@ const AuthContext = React.createContext<AuthContextType>({
   login: () => {},
   sessionStatus: INACTIVE,
   getUserInfo: () => ({
-    [ID_KEY]: '',
-    [EMAIL_KEY]: '',
-    [USER_NAME_KEY]: '',
+    [ID_KEY]: "",
+    [EMAIL_KEY]: "",
+    [USER_NAME_KEY]: ""
   }),
   ACTIVE,
   LOADING,
   INACTIVE
 });
-const { Provider } = AuthContext;
 
 export function AuthContextWrapper(props: { children: JSX.Element }) {
   const [sessionStatus, setSessionStatus] = useState(store.get(SESSION_STATUS));
@@ -89,7 +88,11 @@ export function AuthContextWrapper(props: { children: JSX.Element }) {
     INACTIVE
   };
 
-  return <Provider value={value as AuthContextType}>{props.children}</Provider>;
+  return (
+    <AuthContext.Provider value={value as AuthContextType}>
+      {props.children}
+    </AuthContext.Provider>
+  );
 }
 
 export default AuthContext;

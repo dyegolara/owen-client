@@ -1,19 +1,50 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { database } from "firebaseApi";
-
 import useAuth from "hooks/useAuth";
 
-const ActiveLedgerContext = React.createContext({});
+type Debt = {
+  id: string;
+  amount: number;
+  completed: boolean;
+  created: string;
+  description: string;
+  to: string;
+  date: string;
+};
+type Ledger = {
+  color: string;
+  id: string;
+  modified: string;
+  total: {
+    amount: number;
+    to: string;
+  };
+  users: object;
+  debts: object;
+};
+interface ActiveLedgerType {
+  activeLedger: Ledger | undefined;
+  debts: Debt[];
+  ledgers: Ledger[];
+}
 
-export const ActiveLedgerWrapper = ({ children }) => {
-  const [activeLedger, setActiveLedger] = useState(null);
-  const [debts, setDebts] = useState([]);
-  const [ledgers, setLedgers] = useState([]);
+const ActiveLedgerContext = React.createContext<ActiveLedgerType>({
+  activeLedger: undefined,
+  debts: [],
+  ledgers: []
+});
+
+export const ActiveLedgerWrapper = (props: { children: JSX.Element }) => {
+  const [activeLedger, setActiveLedger] = useState<Ledger | undefined>(
+    undefined
+  );
+  const [debts, setDebts] = useState<Debt[]>([]);
+  const [ledgers, setLedgers] = useState<Ledger[]>([]);
   const { getUserInfo } = useAuth();
   const { userId } = getUserInfo();
 
-  const createNewUser = () => {
+  const createNewUser = (userId: string) => {
     const { userName, email } = getUserInfo();
     database.ref(`users/${userId}`).set({
       name: userName,
@@ -21,7 +52,7 @@ export const ActiveLedgerWrapper = ({ children }) => {
     });
   };
 
-  const handleActiveLedgerChange = snapshot => {
+  const handleActiveLedgerChange = (snapshot: any) => {
     const user = snapshot.val();
     if (user) {
       const newActiveLedger = ledgers.find(
@@ -39,19 +70,11 @@ export const ActiveLedgerWrapper = ({ children }) => {
       if (dataValue) {
         const newLedgers = Object.entries(dataValue).map(([key, value]) => ({
           id: key,
-          ...value
+          ...(value as Ledger)
         }));
         setLedgers(newLedgers);
       }
     });
-  };
-
-  const addActiveLedgerSuscription = () => {
-    if (!userId || ledgers.length === 0) return;
-    database
-      .ref("users")
-      .child(userId)
-      .on("value", handleActiveLedgerChange);
   };
 
   const setDebtsList = () => {
@@ -62,17 +85,26 @@ export const ActiveLedgerWrapper = ({ children }) => {
         ...value,
         date: new Date(value.created).toLocaleDateString("es-MX")
       }))
-      .sort((a, b) => new Date(b.created) - new Date(a.created));
+      .sort((a, b) => +new Date(b.created) - +new Date(a.created));
     setDebts(debtsList);
+  };
+
+  const addActiveLedgerSuscription = () => {
+    if (!userId || ledgers.length === 0) return;
+    database
+      .ref("users")
+      .child(userId)
+      .on("value", handleActiveLedgerChange);
   };
 
   useEffect(addLedgersSuscription, []);
   useEffect(addActiveLedgerSuscription, [ledgers, userId]);
   useEffect(setDebtsList, [activeLedger]);
 
+  const value = { activeLedger, debts, ledgers };
   return (
-    <ActiveLedgerContext.Provider value={{ activeLedger, debts, ledgers }}>
-      {children}
+    <ActiveLedgerContext.Provider value={value as ActiveLedgerType}>
+      {props.children}
     </ActiveLedgerContext.Provider>
   );
 };
