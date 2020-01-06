@@ -4,10 +4,10 @@ import { formatCurrency } from "utils";
 
 type Props = {
   total: {
-    amount: number,
-    to: string
-  }
-}
+    amount: number;
+    to: string;
+  };
+};
 
 const YOU_OWE_THEM = "Debes";
 const THEY_OWE_YOU = "Te deben";

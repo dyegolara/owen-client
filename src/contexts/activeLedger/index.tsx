@@ -4,13 +4,25 @@ import { database } from "firebaseApi";
 import useAuth from "hooks/useAuth";
 import { IActiveLedger, Ledger, Debt } from "types";
 
+const defaultLedger = {
+  color: "",
+  id: "",
+  modified: "",
+  total: {
+    amount: 0,
+    to: ""
+  },
+  users: {},
+  debts: {}
+};
+
 const ActiveLedgerContext = React.createContext<IActiveLedger>({
-  activeLedger: undefined,
+  activeLedger: defaultLedger,
   debts: [],
   ledgers: []
 });
 
-export const ActiveLedgerWrapper = (props: { children: JSX.Element }) => {
+export const ActiveLedgerWrapper = (props: { children: React.ReactNode }) => {
   const [activeLedger, setActiveLedger] = useState<Ledger | undefined>(
     undefined
   );

@@ -25,7 +25,7 @@ const AuthContext = React.createContext<IAuthContext>({
   INACTIVE
 });
 
-export function AuthContextWrapper(props: { children: JSX.Element }) {
+export function AuthContextWrapper(props: { children: React.ReactNode }) {
   const [sessionStatus, setSessionStatus] = useState(store.get(SESSION_STATUS));
 
   const login = () => {

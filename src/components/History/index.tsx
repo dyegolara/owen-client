@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import Debt from "components/Debt";
 import Button from "components/Button";
-import DebtShape from "components/Debt/propTypes";
 import * as S from "./styled";
+import { Debt as DebtType } from "types";
 
-export default function History({ debts }) {
+type Props = {
+  debts: DebtType[];
+};
+
+export default function History({ debts }: Props) {
   const [showFullHistory, setShowFullHistory] = useState(false);
   const debtsToShow = showFullHistory ? debts : debts.slice(0, 10);
 
@@ -27,7 +30,3 @@ export default function History({ debts }) {
     </S.History>
   );
 }
-
-History.propTypes = {
-  debts: PropTypes.arrayOf(DebtShape).isRequired
-};

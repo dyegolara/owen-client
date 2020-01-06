@@ -2,12 +2,15 @@ import React from "react";
 import useActiveLedger from "hooks/useActiveLedger";
 import { formatCurrency } from "utils";
 import * as S from "./styled";
-import DebtShape from "./propTypes";
+import { Debt as DebtType } from "types";
 
-export default function Debt({ debt }) {
-  const {
-    activeLedger: { users }
-  } = useActiveLedger();
+type Props = {
+  debt: DebtType;
+};
+
+export default function Debt({ debt }: Props) {
+  const { activeLedger } = useActiveLedger();
+  const users = activeLedger.users ?? {};
 
   return (
     <S.Debt>
@@ -22,7 +25,3 @@ export default function Debt({ debt }) {
     </S.Debt>
   );
 }
-
-Debt.propTypes = {
-  debt: DebtShape.isRequired
-};

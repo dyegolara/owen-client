@@ -5,7 +5,7 @@ type Props = {
   icon: string;
   className: string;
   ariaLabel: string;
-  children: JSX.Element;
+  children: React.ReactNode;
   onClick: () => void;
 };
 

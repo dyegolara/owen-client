@@ -36,11 +36,15 @@ export type Ledger = {
     amount: number;
     to: string;
   };
-  users: object;
-  debts: object;
+  users: {
+    [key: string]: string;
+  };
+  debts: {
+    [key: string]: string;
+  };
 };
 export interface IActiveLedger {
-  activeLedger: Ledger | undefined;
+  activeLedger: Ledger;
   debts: Debt[];
   ledgers: Ledger[];
 }
