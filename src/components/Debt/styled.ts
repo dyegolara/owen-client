@@ -7,5 +7,3 @@ export const Debt = styled.li`
     border-bottom: 1px solid black;
   }
 `;
-
-export default { Debt };

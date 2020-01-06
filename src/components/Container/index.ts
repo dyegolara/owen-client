@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
 
+type Props = {
+  isFluid?: boolean;
+  isWidescreen?: boolean;
+  isFullhd?: boolean;
+};
+
 // Checar en bulma los breakpoints y el compilado para container
 const Container = styled.div`
   margin: 0 auto;
@@ -8,7 +14,7 @@ const Container = styled.div`
   @media screen and (min-width: 1088px) {
     max-width: 960px;
     width: 960px;
-    ${({ isFluid }) =>
+    ${({ isFluid }: Props) =>
       isFluid &&
       css`
         margin-left: 64px;
@@ -19,7 +25,7 @@ const Container = styled.div`
   }
 
   @media screen and (max-width: 1279px) {
-    ${({ isWidescreen }) =>
+    ${({ isWidescreen }: Props) =>
       isWidescreen &&
       css`
         max-width: 1152px;
@@ -28,7 +34,7 @@ const Container = styled.div`
   }
 
   @media screen and (max-width: 1471px) {
-    ${({ isFullhd }) =>
+    ${({ isFullhd }: Props) =>
       isFullhd &&
       css`
         max-width: 1344px;
