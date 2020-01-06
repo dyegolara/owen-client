@@ -1,6 +1,13 @@
-/* eslint-disable react/button-has-type */
 import React from "react";
-import PropTypes from "prop-types";
+
+type Props = {
+  type: "button" | "submit" | "reset" | undefined;
+  icon: string;
+  className: string;
+  ariaLabel: string;
+  children: JSX.Element;
+  onClick: () => void;
+};
 
 export default function Button({
   type,
@@ -9,7 +16,7 @@ export default function Button({
   ariaLabel,
   children,
   ...props
-}) {
+}: Props) {
   return (
     <button
       type={type}
@@ -26,14 +33,6 @@ export default function Button({
     </button>
   );
 }
-
-Button.propTypes = {
-  type: PropTypes.string,
-  icon: PropTypes.string,
-  className: PropTypes.string,
-  ariaLabel: PropTypes.string,
-  children: PropTypes.node
-};
 
 Button.defaultProps = {
   type: "button",

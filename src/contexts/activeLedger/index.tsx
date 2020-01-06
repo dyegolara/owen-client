@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { database } from "firebaseApi";
 import useAuth from "hooks/useAuth";
+import { IActiveLedger, Ledger, Debt } from "types";
 
-const ActiveLedgerContext = React.createContext<ActiveLedgerType>({
+const ActiveLedgerContext = React.createContext<IActiveLedger>({
   activeLedger: undefined,
   debts: [],
   ledgers: []
@@ -77,7 +78,7 @@ export const ActiveLedgerWrapper = (props: { children: JSX.Element }) => {
 
   const value = { activeLedger, debts, ledgers };
   return (
-    <ActiveLedgerContext.Provider value={value as ActiveLedgerType}>
+    <ActiveLedgerContext.Provider value={value as IActiveLedger}>
       {props.children}
     </ActiveLedgerContext.Provider>
   );

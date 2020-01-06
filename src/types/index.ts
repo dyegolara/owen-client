@@ -8,7 +8,7 @@ export type UserInfo = {
   email: string;
   userName: string;
 };
-export interface AuthContextType {
+export interface IAuthContext {
   login: () => void;
   sessionStatus: string;
   getUserInfo: () => UserInfo;
@@ -17,13 +17,15 @@ export interface AuthContextType {
   INACTIVE: string;
 }
 
-export type Debt = {
-  id: string;
+export type NewDebt = {
   amount: number;
   completed: boolean;
   created: string;
   description: string;
   to: string;
+};
+export type Debt = NewDebt & {
+  id: string;
   date: string;
 };
 export type Ledger = {
@@ -37,7 +39,7 @@ export type Ledger = {
   users: object;
   debts: object;
 };
-export interface ActiveLedgerType {
+export interface IActiveLedger {
   activeLedger: Ledger | undefined;
   debts: Debt[];
   ledgers: Ledger[];

@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from "react";
+import { findKey } from "lodash";
 import { database } from "firebaseApi";
-
 import AmountInput from "components/Form/AmountInput";
 import DescriptionInput from "components/Form/DescriptionInput";
 import Button from "components/Button";
 import useAuth from "hooks/useAuth";
-import LedgerShape from "components/Ledgers/propTypes";
+import { Ledger, NewDebt } from "types";
 
-export default function Form({ activeLedger }) {
+export default function Form({ activeLedger }: { activeLedger: Ledger }) {
   const { getUserInfo } = useAuth();
   const { userId } = getUserInfo();
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
-  const [friendId, setFriendId] = useState("");
+  const [friendId, setFriendId] = useState<string>("");
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [isValid, setIsValid] = useState(true);
 
   const getFriendId = () => {
     const { users } = activeLedger;
-    const newFriendId = Object.keys(users).find(id => id !== userId);
+    const newFriendId = findKey(users, id => id !== userId) || "";
     setFriendId(newFriendId);
   };
 
-  const getOtherUserId = id => (id === userId ? friendId : userId);
+  const getOtherUserId = (id: string) => (id === userId ? friendId : userId);
 
-  const handleAmountChange = e => {
-    const { value } = e.target;
+  const handleAmountChange = (event: React.SyntheticEvent): void => {
+    const { value } = event.target as HTMLInputElement;
     setAmount(value);
   };
 
-  const handleDescriptionChange = e => {
-    const { value } = e.target;
+  const handleDescriptionChange = (event: React.SyntheticEvent): void => {
+    const { value } = event.target as HTMLTextAreaElement;
     setDescription(value);
   };
 
@@ -43,7 +43,7 @@ export default function Form({ activeLedger }) {
     setIsValid(+amount >= 1);
   };
 
-  const updateTotal = newDebt => {
+  const updateTotal = (newDebt: NewDebt): void => {
     const {
       id: activeLedgerId,
       total: { amount: currentDebt, to: currentOwner }
@@ -61,7 +61,7 @@ export default function Form({ activeLedger }) {
     database.ref(`ledgers/${activeLedgerId}/total`).set(newTotal);
   };
 
-  const createDebt = to => {
+  const createDebt = (to: string): void => {
     if (!isValid) return;
     const newDebtId = database
       .ref()
@@ -123,7 +123,3 @@ export default function Form({ activeLedger }) {
     </div>
   );
 }
-
-Form.propTypes = {
-  activeLedger: LedgerShape.isRequired
-};

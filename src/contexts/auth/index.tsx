@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import store from "store";
 import { auth, googleAuthProvider } from "firebaseApi";
+import { IAuthContext, UserInfo, User } from "types";
 
 const ID_KEY = "userId";
 const EMAIL_KEY = "email";
@@ -11,7 +12,7 @@ export const ACTIVE = "active";
 export const LOADING = "loading";
 export const INACTIVE = "inactive";
 
-const AuthContext = React.createContext<AuthContextType>({
+const AuthContext = React.createContext<IAuthContext>({
   login: () => {},
   sessionStatus: INACTIVE,
   getUserInfo: () => ({
@@ -70,7 +71,7 @@ export function AuthContextWrapper(props: { children: JSX.Element }) {
   };
 
   return (
-    <AuthContext.Provider value={value as AuthContextType}>
+    <AuthContext.Provider value={value as IAuthContext}>
       {props.children}
     </AuthContext.Provider>
   );
