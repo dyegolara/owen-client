@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { findKey } from "lodash";
 import { database } from "firebaseApi";
 import AmountInput from "components/Form/AmountInput";
 import DescriptionInput from "components/Form/DescriptionInput";
 import Button from "components/Button";
 import useAuth from "hooks/useAuth";
+import { getFriendId } from "utils";
 import { Ledger, NewDebt } from "types";
 
 export default function Form({ activeLedger }: { activeLedger: Ledger }) {
@@ -16,9 +16,8 @@ export default function Form({ activeLedger }: { activeLedger: Ledger }) {
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [isValid, setIsValid] = useState(true);
 
-  const getFriendId = () => {
-    const { users } = activeLedger;
-    const newFriendId = findKey(users, id => id !== userId) || "";
+  const getNewFriendId = () => {
+    const newFriendId = getFriendId(activeLedger, userId);
     setFriendId(newFriendId);
   };
 
@@ -83,7 +82,7 @@ export default function Form({ activeLedger }: { activeLedger: Ledger }) {
   };
 
   useEffect(validateAmount, [amount]);
-  useEffect(getFriendId, [activeLedger.id]);
+  useEffect(getNewFriendId, [activeLedger.id]);
 
   return (
     <div className="columns" style={{ padding: "1rem" }}>

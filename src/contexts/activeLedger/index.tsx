@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { entries } from "lodash";
 import { database } from "firebaseApi";
 import useAuth from "hooks/useAuth";
 import { IActiveLedger, Ledger, Debt } from "types";
@@ -23,9 +23,7 @@ const ActiveLedgerContext = React.createContext<IActiveLedger>({
 });
 
 export const ActiveLedgerWrapper = (props: { children: React.ReactNode }) => {
-  const [activeLedger, setActiveLedger] = useState<Ledger | undefined>(
-    undefined
-  );
+  const [activeLedger, setActiveLedger] = useState<Ledger>(defaultLedger);
   const [debts, setDebts] = useState<Debt[]>([]);
   const [ledgers, setLedgers] = useState<Ledger[]>([]);
   const { getUserInfo } = useAuth();
@@ -42,9 +40,8 @@ export const ActiveLedgerWrapper = (props: { children: React.ReactNode }) => {
   const handleActiveLedgerChange = (snapshot: any) => {
     const user = snapshot.val();
     if (user) {
-      const newActiveLedger = ledgers.find(
-        ({ id }) => id === user.activeLedger
-      );
+      const newActiveLedger =
+        ledgers.find(({ id }) => id === user.activeLedger) || defaultLedger;
       setActiveLedger(newActiveLedger);
     } else {
       createNewUser(userId);
@@ -55,7 +52,7 @@ export const ActiveLedgerWrapper = (props: { children: React.ReactNode }) => {
     database.ref("ledgers").on("value", snapshot => {
       const dataValue = snapshot.val();
       if (dataValue) {
-        const newLedgers = Object.entries(dataValue).map(([key, value]) => ({
+        const newLedgers = entries(dataValue).map(([key, value]) => ({
           id: key,
           ...(value as Ledger)
         }));
@@ -64,13 +61,15 @@ export const ActiveLedgerWrapper = (props: { children: React.ReactNode }) => {
     });
   };
 
-  const setDebtsList = () => {
-    if (!activeLedger) return;
-    const debtsList = Object.entries(activeLedger.debts)
-      .map(([key, value]) => ({
+  const setDebtsList = (): void => {
+    if (!activeLedger) {
+      return;
+    }
+    const debtsList: Debt[] = entries(activeLedger.debts)
+      .map(([key, value]: [string, any]) => ({
         id: key,
-        ...value,
-        date: new Date(value.created).toLocaleDateString("es-MX")
+        date: new Date(value.created).toLocaleDateString("es-MX"),
+        ...value
       }))
       .sort((a, b) => +new Date(b.created) - +new Date(a.created));
     setDebts(debtsList);
@@ -94,10 +93,6 @@ export const ActiveLedgerWrapper = (props: { children: React.ReactNode }) => {
       {props.children}
     </ActiveLedgerContext.Provider>
   );
-};
-
-ActiveLedgerWrapper.propTypes = {
-  children: PropTypes.node.isRequired
 };
 
 export default ActiveLedgerContext;
