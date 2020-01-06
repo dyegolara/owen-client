@@ -1,16 +1,21 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import useAuth from "hooks/useAuth";
 import { formatCurrency } from "utils";
+
+type Props = {
+  total: {
+    amount: number,
+    to: string
+  }
+}
 
 const YOU_OWE_THEM = "Debes";
 const THEY_OWE_YOU = "Te deben";
 
-export default function Total({ total: { amount, to } }) {
+export default function Total({ total: { amount, to } }: Props) {
   const { getUserInfo } = useAuth();
 
-  const getTotalLabel = () => {
+  const getTotalLabel = (): string => {
     const { userId } = getUserInfo();
     if (amount === 0) return YOU_OWE_THEM;
     return to === userId ? YOU_OWE_THEM : THEY_OWE_YOU;
@@ -29,10 +34,3 @@ export default function Total({ total: { amount, to } }) {
     </div>
   );
 }
-
-Total.propTypes = {
-  total: PropTypes.shape({
-    amount: PropTypes.number.isRequired,
-    to: PropTypes.string.isRequired
-  }).isRequired
-};

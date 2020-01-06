@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
 import Debt from "components/Debt";
 import Button from "components/Button";
 import DebtShape from "components/Debt/propTypes";
